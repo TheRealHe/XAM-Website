@@ -1,0 +1,274 @@
+/* ===== FUENTES ===== */
+:root {
+    --gothic-font: 'Uncial Antiqua', cursive;
+    --main-font: 'Inter', sans-serif;
+}
+
+/* ===== RESET Y GENERAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--main-font);
+    background-color: #0a0a0a;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   ENCABEZADO (estilos visuales, el color lo da el div)
+   ========================================== */
+.brand-text {
+    font-family: var(--gothic-font);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+.navbar .nav-link {
+    color: #222222 !important;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar .nav-link:hover {
+    color: #000000 !important;
+}
+
+.navbar .nav-link.active {
+    color: #000000 !important;
+    font-weight: 700;
+    border-bottom: 2px solid #000000;
+}
+
+.navbar .dropdown-toggle {
+    color: #222222 !important;
+}
+
+.navbar .dropdown-toggle:hover {
+    color: #000000 !important;
+}
+
+.navbar .dropdown-menu {
+    background-color: #ffffff !important;
+    border: 1px solid #cccccc !important;
+}
+
+.navbar .dropdown-item {
+    color: #000000 !important;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #f0f0f0 !important;
+}
+
+/* Botón hamburguesa (móvil) */
+.navbar-toggler {
+    border-color: #000000 !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0,1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ==========================================
+   HERO (NEGRO)
+   ========================================== */
+.hero-section {
+    min-height: 80vh;
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
+                url('../assets/images/hero-bg.jpg') center/cover no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #333333;
+}
+
+.hero-title {
+    font-family: var(--gothic-font);
+    letter-spacing: 8px;
+    color: #ffffff;
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+}
+
+.hero-subtitle {
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: #cccccc;
+}
+
+.hero-section .btn-outline-light {
+    border-color: #ffffff;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.hero-section .btn-outline-light:hover {
+    background: #ffffff;
+    color: #0a0a0a;
+}
+
+/* ==========================================
+   SECCIONES DE CONTENIDO (FONDO NEGRO)
+   ========================================== */
+section:not(.hero-section) {
+    background-color: #0a0a0a !important;
+}
+
+.bg-dark {
+    background-color: #0a0a0a !important;
+}
+
+.bg-secondary {
+    background-color: #1a1a1a !important;
+}
+
+section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #222222;
+}
+
+.section-title {
+    font-family: var(--gothic-font);
+    color: #ffffff;
+    letter-spacing: 3px;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+section p,
+section .lead {
+    color: #d0d0d0;
+}
+
+section .text-dark {
+    color: #ffffff !important;
+}
+
+/* ==========================================
+   TARJETAS DE PRODUCTOS
+   ========================================== */
+.product-card {
+    background: #0a0a0a;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.05);
+    border-color: #ffffff;
+}
+
+.product-card .card-body {
+    padding: 1.25rem;
+    background: #0a0a0a;
+}
+
+.product-card .card-title {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.product-card .card-text {
+    color: #aaaaaa;
+    font-size: 0.9rem;
+}
+
+.product-card .price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Botón de compra */
+.btn-buy {
+    background: #ffffff;
+    color: #0a0a0a;
+    font-weight: 700;
+    border: none;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.btn-buy:hover {
+    background: #e0e0e0;
+    color: #000000;
+    transform: scale(1.02);
+}
+
+/* ==========================================
+   FILTROS
+   ========================================== */
+.filter-btn {
+    border-radius: 30px;
+    padding: 0.4rem 1.8rem;
+    transition: all 0.3s;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #444444;
+}
+
+.filter-btn:hover {
+    background: #ffffff;
+    color: #0a0a0a;
+}
+
+.filter-btn.active {
+    background: #ffffff !important;
+    color: #0a0a0a !important;
+    border-color: #ffffff !important;
+}
+
+/* ==========================================
+   PIE DE PÁGINA (estilos visuales, el color lo da el div)
+   ========================================== */
+footer .social-icons a {
+    transition: color 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+footer .social-icons a:hover {
+    color: #555555 !important;
+    transform: scale(1.2);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .product-card img {
+        height: 220px;
+    }
+    
+    .brand-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2.2rem;
+        letter-spacing: 4px;
+    }
+}
