@@ -38,6 +38,21 @@ const traducciones = {
     'buy-btn': { es: 'Comprar', en: 'Buy' },
     'no-products': { es: 'No hay productos disponibles en esta categoría.', en: 'No products available in this category.' },
     'footer-rights': { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
+    'map-title': { es: '📍 Encuentra nuestros productos', en: '📍 Find our products' },
+    'map-subtitle': { 
+        es: 'Actualmente nuestros productos están disponibles en <strong>Restaurante y Minimarket Coreano Saranghae</strong>, nuestro socio comercial.<br><small>¡Visítalos y descubre nuestra colección en persona!</small>', 
+        en: 'Our products are currently available at <strong>Saranghae Korean Restaurant & Minimarket</strong>, our business partner.<br><small>Visit them and discover our collection in person!</small>' 
+    },
+    'map-partner': { es: 'Nuestro socio', en: 'Our partner' },
+    'map-partner-name': { es: 'Restaurante y Minimarket Coreano Saranghae', en: 'Saranghae Korean Restaurant & Minimarket' },
+    'map-address': { es: 'Dirección', en: 'Address' },
+    'map-address-text': { es: 'Cra. 44 A N 18 70 Sur, Villavicencio', en: 'Cra. 44 A N 18 70 Sur, Villavicencio' },
+    'map-hours': { es: 'Horario de atención', en: 'Business hours' },
+    'map-hours-text': { es: 'Dom - Vie: 1:00 PM - 9:00 PM', en: 'Sun - Fry: 1:00 PM - 9:00 PM' },
+    'map-note': { 
+        es: ' XAM Goth Apparel es una marca independiente. Nuestros productos están disponibles en este punto de venta gracias a nuestro socio comercial.', 
+        en: ' XAM Goth Apparel is an independent brand. Our products are available at this location thanks to our business partner.' 
+},
 };
 
 // ==================================================
@@ -226,7 +241,8 @@ function aplicarIdioma() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (traducciones[key] && traducciones[key][idiomaActual]) {
-            el.textContent = traducciones[key][idiomaActual];
+            // Usamos innerHTML para permitir etiquetas HTML
+            el.innerHTML = traducciones[key][idiomaActual];
         }
     });
 }
