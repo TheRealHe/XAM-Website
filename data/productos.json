@@ -1,10 +1,14 @@
 [
     {
         "id": 1,
-        "nombre_es": "Maleta Gotica con Cruz",
-        "nombre_en": "Gothic Cross Charm Bagpack",
-        "descripcion_es": "Maleta gotica hecha con cuero vegano y decorativos metalicos.",
-        "descripcion_en": "Gothic backpack made of vegan leatrher and with metalic decoratives",
+        "nombre": {
+            "es": "Maleta Gotica con Cruz",
+            "en": "Gothic Cross Charm Bagpack"
+        },
+        "descripcion": {
+            "es": "Maleta gotica hecha con cuero vegano y decorativos metalicos.",
+            "en": "Gothic backpack made of vegan leather and with metallic decoratives"
+        },
         "precio": 90000,
         "categoria": "maletas",
         "imagenes": [
