@@ -16,29 +16,6 @@ const productos = [
         ],
         activo: true
     },
-    {
-        id: 2,
-        nombre: { es: "Anillo de Plata", en: "Silver Ring" },
-        descripcion: { es: "Anillo de plata 925 con grabado de calavera.", en: "925 silver ring with skull engraving." },
-        precio: 32000,
-        categoria: "accesorios",
-        imagenes: [
-            "assets/images/product2.png",
-            "assets/images/product2-2.png"
-        ],
-        activo: true
-    },
-    {
-        id: 3,
-        nombre: { es: "Pantalón Táctico", en: "Tactical Pants" },
-        descripcion: { es: "Pantalón de carga con costuras reforzadas.", en: "Cargo pants with reinforced stitching." },
-        precio: 89000,
-        categoria: "pantalones",
-        imagenes: [
-            "assets/images/product3.png"
-        ],
-        activo: true
-    },
 ];
 
 // ==================================================
