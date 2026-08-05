@@ -37,10 +37,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html" data-i18n="nav-home">Inicio</a>
+                            <a class="nav-link" href="index.html" data-i18n="nav-home">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html" data-i18n="nav-products">Productos</a>
+                            <a class="nav-link active" href="products.html" data-i18n="nav-products">Productos</a>
                         </li>
                         <!-- Selector de idioma -->
                         <li class="nav-item dropdown">
@@ -65,13 +65,58 @@
         <div class="container">
             <h1 class="section-title text-center mb-5" data-i18n="catalog-title">Nuestros Productos</h1>
             
-            <!-- Filtros por categoría -->
-            <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
-                <button class="btn btn-dark filter-btn active" data-filter="all" data-i18n="filter-all">Todos</button>
-                <button class="btn btn-outline-dark filter-btn" data-filter="camisas" data-i18n="filter-shirts">Camisas</button>
-                <button class="btn btn-outline-dark filter-btn" data-filter="accesorios" data-i18n="filter-accessories">Accesorios</button>
-                <button class="btn btn-outline-dark filter-btn" data-filter="pantalones" data-i18n="filter-pants">Pantalones</button>
+<div class="container mb-5">
+    
+    <div class="row g-3">
+        <!-- Columna 1: Acordeón de categorías -->
+        <div class="col-md-6">
+            <div class="accordion" id="categoryAccordion">
+                <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
+                            <i class="bi bi-tags me-2"></i> <span data-i18n="filter-by-category">Filtrar por categoría</span>
+                        </button>
+                    </h2>
+                    <div id="categoryCollapse" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body" style="background: #0a0a0a;">
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-outline-light filter-category active" data-category="all" data-i18n="filter-all">Todos</button>
+                                <button class="btn btn-outline-light filter-category" data-category="camisas" data-i18n="filter-shirts">Camisas</button>
+                                <button class="btn btn-outline-light filter-category" data-category="accesorios" data-i18n="filter-accessories">Accesorios</button>
+                                <button class="btn btn-outline-light filter-category" data-category="pantalones" data-i18n="filter-pants">Pantalones</button>
+                                <button class="btn btn-outline-light filter-category" data-category="zapatos" data-i18n="filter-shoes">Zapatos</button>
+                                <button class="btn btn-outline-light filter-category" data-category="faldas" data-i18n="filter-skirts">Faldas</button>
+                                <button class="btn btn-outline-light filter-category" data-category="peluches" data-i18n="filter-plushies">Peluches</button>
+                                <button class="btn btn-outline-light filter-category" data-category="maletas" data-i18n="filter-bags">Maletas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+    <div class="col-md-6">
+        <div class="accordion" id="priceAccordion">
+            <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
+                        <i class="bi bi-currency-dollar me-2"></i> <span data-i18n="filter-by-price">Filtrar por precio</span>
+                    </button>
+                </h2>
+                <div id="priceCollapse" class="accordion-collapse collapse" data-bs-parent="#priceAccordion">
+                    <div class="accordion-body" style="background: #0a0a0a;">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-light filter-price active" data-price="all" data-i18n="price-all">Todos</button>
+                            <button class="btn btn-outline-light filter-price" data-price="menos-20" data-i18n="price-less-20">Menos de $20.000</button>
+                            <button class="btn btn-outline-light filter-price" data-price="20-50" data-i18n="price-20-50">$20.000 - $50.000</button>
+                            <button class="btn btn-outline-light filter-price" data-price="50-100" data-i18n="price-50-100">$50.000 - $100.000</button>
+                            <button class="btn btn-outline-light filter-price" data-price="mas-100" data-i18n="price-more-100">Más de $100.000</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
             <!-- Grid de productos -->
             <div class="row g-4" id="product-grid">
