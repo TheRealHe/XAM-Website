@@ -29,5 +29,7 @@ collections:
         widget: "list"
         field:
           widget: "image"
+          label: "Imágen"
+          name: "imagen"
 
       - { label: "Activo", name: "activo", widget: "boolean", default: true }
