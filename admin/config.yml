@@ -33,8 +33,18 @@ collections:
           - { label: "Inglés", name: "en", widget: "text" }
       
       - { label: "Precio", name: "precio", widget: "number" }
-      - { label: "Categoría", name: "categoria", widget: "string" }
-      
+      - label: "Categoría"
+        name: "categoria"
+        widget: "select"
+        options:
+          - { label: "Camisas", value: "camisas" }
+          - { label: "Accesorios", value: "accesorios" }
+          - { label: "Pantalones", value: "pantalones" }
+          - { label: "Zapatos", value: "zapatos" }
+          - { label: "Faldas", value: "faldas" }
+          - { label: "Peluches", value: "peluches" }
+          - { label: "Maletas", value: "maletas" }
+          
       - label: "Imágenes"
         name: "imagenes"
         widget: "list"
