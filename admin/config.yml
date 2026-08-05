@@ -22,9 +22,6 @@ collections:
       - { label: "Descripción (EN)", name: "descripcion_en", widget: "text" }
       - { label: "Precio", name: "precio", widget: "number" }
       - { label: "Categoría", name: "categoria", widget: "string" }
-<<<<<<< Updated upstream
-      - { label: "Imágenes", name: "imagenes", widget: "list", default: [] }
-=======
 
       - label: "Imágenes"
         name: "imagenes"
@@ -34,5 +31,4 @@ collections:
           name: "imagen"
           widget: "image"
 
->>>>>>> Stashed changes
       - { label: "Activo", name: "activo", widget: "boolean", default: true }

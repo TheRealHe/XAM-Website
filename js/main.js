@@ -1,50 +1,8 @@
 // ==================================================
-// 1. CATÁLOGO DE PRODUCTOS
-// ==================================================
-const productos = [
-    {
-        id: 1,
-        nombre: { es: "Maleta Gotica con Cruz", en: "Gothic Cross Charm Bagpack" },
-        descripcion: { es: "Maleta gotica hecha con cuero vegano y decorativos metalicos.", en: "100% cotton t-shirt with moon and ravens print." },
-        precio: 90000,
-        categoria: "camisas",
-        imagenes: [
-            "assets/images/product1.png",
-            "assets/images/product1-2.png",
-            "assets/images/product1-3.png",
-            "assets/images/product1-4.png"
-        ],
-        activo: true
-    },
-    {
-        id: 2,
-        nombre: { es: "Anillo de Plata", en: "Silver Ring" },
-        descripcion: { es: "Anillo de plata 925 con grabado de calavera.", en: "925 silver ring with skull engraving." },
-        precio: 32000,
-        categoria: "accesorios",
-        imagenes: [
-            "assets/images/product2.png",
-            "assets/images/product2-2.png"
-        ],
-        activo: true
-    },
-    {
-        id: 3,
-        nombre: { es: "Pantalón Táctico", en: "Tactical Pants" },
-        descripcion: { es: "Pantalón de carga con costuras reforzadas.", en: "Cargo pants with reinforced stitching." },
-        precio: 89000,
-        categoria: "pantalones",
-        imagenes: [
-            "assets/images/product3.png"
-        ],
-        activo: true
-    },
-];
-
-// ==================================================
-// 2. SISTEMA DE IDIOMAS
+// 1. SISTEMA DE IDIOMAS
 // ==================================================
 let idiomaActual = 'es';
+let productos = [];  // Ahora se llenará desde el JSON
 
 const traducciones = {
     'nav-home': { es: 'Inicio', en: 'Home' },
@@ -73,27 +31,26 @@ const traducciones = {
     'filter-by-category': { es: 'Filtrar por categoría', en: 'Filter by category' },
     'filter-by-price': { es: 'Filtrar por precio', en: 'Filter by price' },
     'price-all': { es: 'Todos', en: 'All' },
-    // ===== NUEVAS TRADUCCIONES PARA PRECIOS =====
     'price-less-20': { es: 'Menos de $20.000', en: 'Less than $20.000' },
     'price-20-50': { es: '$20.000 - $50.000', en: '$20.000 - $50.000' },
     'price-50-100': { es: '$50.000 - $100.000', en: '$50.000 - $100.000' },
     'price-more-100': { es: 'Más de $100.000', en: 'More than $100.000' },
-    // ============================================
+    'buy-btn': { es: 'Comprar', en: 'Buy' },
+    'no-products': { es: 'No hay productos disponibles en esta categoría.', en: 'No products available in this category.' },
     'footer-rights': { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
 };
 
 // ==================================================
-// 3. ESTADO DE FILTROS
+// 2. ESTADO DE FILTROS
 // ==================================================
 let filtroCategoria = 'all';
 let filtroPrecio = 'all';
 
 // ==================================================
-// 4. FUNCIONES PRINCIPALES
+// 3. FUNCIONES PRINCIPALES
 // ==================================================
 
-// RENDERIZAR PRODUCTOS CON CARRUSEL
-
+// Renderizar productos
 function renderizarProductos() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
@@ -134,68 +91,42 @@ function renderizarProductos() {
     // 5. Generar HTML de productos con carrusel
     const html = productosFiltrados.map((p, index) => {
         const carouselId = `carousel-${p.id}-${index}`;
-
-        // Compatible tanto con:
-        // ["img1.png", "img2.png"]
-        // como con:
-        // [{ imagen: "img1.png" }, { imagen: "img2.png" }]
+        const tieneMultiples = p.imagenes && p.imagenes.length > 1;
         
-        const imagenes = (p.imagenes || []).map(img =>
-            typeof img === "string" ? img : img.imagen
-        );
-
-        const tieneMultiples = imagenes.length > 1;
-
         // Generar imágenes
         let imagenesHTML = '';
-
-        if (imagenes.length > 0) {
-
-            imagenes.forEach((img, idx) => {
-
+        if (p.imagenes && p.imagenes.length > 0) {
+            p.imagenes.forEach((img, idx) => {
                 imagenesHTML += `
                     <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                        <img src="${img}" class="d-block w-100"
-                            alt="${p.nombre[idiomaActual]}"
-                            style="height: 280px; object-fit: cover;">
+                        <img src="${img}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
+                             style="height: 280px; object-fit: cover;">
                     </div>
                 `;
-
             });
-
         } else {
-
             imagenesHTML = `
                 <div class="carousel-item active">
-                    <img src="assets/images/placeholder.jpg"
-                        class="d-block w-100"
-                        alt="Sin imagen"
-                        style="height: 280px; object-fit: cover; background: #222;">
+                    <img src="assets/images/placeholder.jpg" class="d-block w-100" alt="Sin imagen" 
+                         style="height: 280px; object-fit: cover; background: #222;">
                 </div>
             `;
-
         }
 
-        // Generar puntos indicadores (con IDs únicos)
+        // Generar puntos indicadores
         let puntosHTML = '';
-
         if (tieneMultiples) {
-
-            imagenes.forEach((_, idx) => {
-
+            p.imagenes.forEach((_, idx) => {
                 puntosHTML += `
-                    <button type="button"
-                            class="carousel-dot"
-                            data-carousel-id="${carouselId}"
-                            data-slide-to="${idx}"
-                            style="width: 12px; height: 12px; border-radius: 50%; border: none;
-                                background: ${idx === 0 ? '#ffffff' : '#555555'};
-                                margin: 0 4px; padding: 0; cursor: pointer; transition: background 0.3s;">
+                    <button type="button" class="carousel-dot" 
+                            data-carousel-id="${carouselId}" 
+                            data-slide-to="${idx}" 
+                            style="width: 12px; height: 12px; border-radius: 50%; border: none; 
+                                   background: ${idx === 0 ? '#ffffff' : '#555555'}; 
+                                   margin: 0 4px; padding: 0; cursor: pointer; transition: background 0.3s;">
                     </button>
                 `;
-
             });
-
         }
 
         return `
@@ -246,19 +177,15 @@ function renderizarProductos() {
     grid.innerHTML = html;
     aplicarIdioma();
 
-    // ==========================================
-    // 6. INICIALIZAR EVENTOS DE LOS CARRUSELES
-    // ==========================================
+    // Inicializar eventos de los carruseles
     document.querySelectorAll('.carousel').forEach(carousel => {
         const carouselId = carousel.id;
         
-        // Evento cuando cambia de slide
         carousel.addEventListener('slid.bs.carousel', function(event) {
             const newIndex = event.to;
             const dotContainer = document.getElementById(`${carouselId}-dots`);
             
             if (dotContainer) {
-                // Actualizar todos los puntos de este carrusel
                 const dots = dotContainer.querySelectorAll('.carousel-dot');
                 dots.forEach((dot, idx) => {
                     if (idx === newIndex) {
@@ -270,13 +197,12 @@ function renderizarProductos() {
             }
         });
 
-        // Click en puntos para navegar
         const dots = document.querySelectorAll(`#${carouselId}-dots .carousel-dot`);
         dots.forEach(dot => {
             dot.addEventListener('click', function() {
                 const slideIndex = parseInt(this.dataset.slideTo);
-                const carousel = document.getElementById(carouselId);
-                const bsCarousel = bootstrap.Carousel.getInstance(carousel);
+                const carouselEl = document.getElementById(carouselId);
+                const bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
                 if (bsCarousel) {
                     bsCarousel.to(slideIndex);
                 }
@@ -285,7 +211,9 @@ function renderizarProductos() {
     });
 }
 
-// Cambiar idioma
+// ==================================================
+// 4. IDIOMAS
+// ==================================================
 function cambiarIdioma(lang) {
     idiomaActual = lang;
     localStorage.setItem('xam-lang', lang);
@@ -294,7 +222,6 @@ function cambiarIdioma(lang) {
     renderizarProductos();
 }
 
-// Aplicar idioma a todos los elementos con data-i18n
 function aplicarIdioma() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -305,19 +232,40 @@ function aplicarIdioma() {
 }
 
 // ==================================================
-// 5. EVENTOS Y CONFIGURACIÓN INICIAL
+// 5. CARGAR PRODUCTOS DESDE JSON
 // ==================================================
+function cargarProductos() {
+    fetch('data/productos.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudo cargar el archivo de productos');
+            }
+            return response.json();
+        })
+        .then(data => {
+            productos = data;
+            renderizarProductos();
+        })
+        .catch(error => {
+            console.error('Error cargando productos:', error);
+            // Productos de respaldo en caso de error
+            productos = [];
+            renderizarProductos();
+        });
+}
 
+// ==================================================
+// 6. EVENTOS Y CONFIGURACIÓN INICIAL
+// ==================================================
 document.addEventListener('DOMContentLoaded', () => {
     // Recuperar idioma guardado
     const langGuardado = localStorage.getItem('xam-lang') || 'es';
     idiomaActual = langGuardado;
     document.getElementById('current-lang').textContent = langGuardado.toUpperCase();
 
-    // ===== FILTRO POR CATEGORÍA =====
+    // Eventos de filtros
     document.querySelectorAll('.filter-category').forEach(btn => {
         btn.addEventListener('click', function() {
-            // Desactivar todos los botones de categoría
             document.querySelectorAll('.filter-category').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             filtroCategoria = this.dataset.category;
@@ -325,10 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== FILTRO POR PRECIO =====
     document.querySelectorAll('.filter-price').forEach(btn => {
         btn.addEventListener('click', function() {
-            // Desactivar todos los botones de precio
             document.querySelectorAll('.filter-price').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             filtroPrecio = this.dataset.price;
@@ -336,13 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== CAMBIO DE IDIOMA =====
     document.querySelectorAll('[data-lang]').forEach(btn => {
         btn.addEventListener('click', () => {
             cambiarIdioma(btn.dataset.lang);
         });
     });
 
-    // Renderizar productos iniciales
-    renderizarProductos();
+    // Cargar productos desde el JSON
+    cargarProductos();
 });
