@@ -5,9 +5,6 @@ backend:
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
-media_library:
-  name: local
-
 collections:
   - name: "productos"
     label: "Productos"
