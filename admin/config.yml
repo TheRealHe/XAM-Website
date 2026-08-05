@@ -26,14 +26,10 @@ collections:
 
       - label: "Imágenes"
         name: "imagenes"
-        widget: "list"
-        field:
-          widget: "image"
-          label: "Imágen"
-          name: "imagen"
-          media_library:
-            config:
-              multiple: true   # <--- ¡ESTO ES LA CLAVE!
+        widget: "gallery"
+        media_library:
+          config:
+            multiple: true
         default: []
 
       - { label: "Activo", name: "activo", widget: "boolean", default: true }
