@@ -31,5 +31,9 @@ collections:
           widget: "image"
           label: "Imágen"
           name: "imagen"
+          media_library:
+            config:
+              multiple: true   # <--- ¡ESTO ES LA CLAVE!
+        default: []
 
       - { label: "Activo", name: "activo", widget: "boolean", default: true }
