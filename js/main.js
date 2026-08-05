@@ -134,42 +134,68 @@ function renderizarProductos() {
     // 5. Generar HTML de productos con carrusel
     const html = productosFiltrados.map((p, index) => {
         const carouselId = `carousel-${p.id}-${index}`;
-        const tieneMultiples = p.imagenes && p.imagenes.length > 1;
+
+        // Compatible tanto con:
+        // ["img1.png", "img2.png"]
+        // como con:
+        // [{ imagen: "img1.png" }, { imagen: "img2.png" }]
         
+        const imagenes = (p.imagenes || []).map(img =>
+            typeof img === "string" ? img : img.imagen
+        );
+
+        const tieneMultiples = imagenes.length > 1;
+
         // Generar imágenes
         let imagenesHTML = '';
-        if (p.imagenes && p.imagenes.length > 0) {
-            p.imagenes.forEach((img, idx) => {
+
+        if (imagenes.length > 0) {
+
+            imagenes.forEach((img, idx) => {
+
                 imagenesHTML += `
                     <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                        <img src="${img}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
-                             style="height: 280px; object-fit: cover;">
+                        <img src="${img}" class="d-block w-100"
+                            alt="${p.nombre[idiomaActual]}"
+                            style="height: 280px; object-fit: cover;">
                     </div>
                 `;
+
             });
+
         } else {
+
             imagenesHTML = `
                 <div class="carousel-item active">
-                    <img src="assets/images/placeholder.jpg" class="d-block w-100" alt="Sin imagen" 
-                         style="height: 280px; object-fit: cover; background: #222;">
+                    <img src="assets/images/placeholder.jpg"
+                        class="d-block w-100"
+                        alt="Sin imagen"
+                        style="height: 280px; object-fit: cover; background: #222;">
                 </div>
             `;
+
         }
 
         // Generar puntos indicadores (con IDs únicos)
         let puntosHTML = '';
+
         if (tieneMultiples) {
-            p.imagenes.forEach((_, idx) => {
+
+            imagenes.forEach((_, idx) => {
+
                 puntosHTML += `
-                    <button type="button" class="carousel-dot" 
-                            data-carousel-id="${carouselId}" 
-                            data-slide-to="${idx}" 
-                            style="width: 12px; height: 12px; border-radius: 50%; border: none; 
-                                   background: ${idx === 0 ? '#ffffff' : '#555555'}; 
-                                   margin: 0 4px; padding: 0; cursor: pointer; transition: background 0.3s;">
+                    <button type="button"
+                            class="carousel-dot"
+                            data-carousel-id="${carouselId}"
+                            data-slide-to="${idx}"
+                            style="width: 12px; height: 12px; border-radius: 50%; border: none;
+                                background: ${idx === 0 ? '#ffffff' : '#555555'};
+                                margin: 0 4px; padding: 0; cursor: pointer; transition: background 0.3s;">
                     </button>
                 `;
+
             });
+
         }
 
         return `
