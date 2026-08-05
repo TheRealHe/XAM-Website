@@ -14,6 +14,7 @@ collections:
     create: true
     slug: "productos"
     summary: "{{nombre_es}} - ${{precio}}"
+
     fields:
       - { label: "ID", name: "id", widget: "number", required: false }
       - { label: "Nombre (ES)", name: "nombre_es", widget: "string" }
@@ -22,5 +23,11 @@ collections:
       - { label: "Descripción (EN)", name: "descripcion_en", widget: "text" }
       - { label: "Precio", name: "precio", widget: "number" }
       - { label: "Categoría", name: "categoria", widget: "string" }
-      - { label: "Imágenes", name: "imagenes", widget: "list", default: [] }
+
+      - label: "Imágenes"
+        name: "imagenes"
+        widget: "list"
+        field:
+          widget: "image"
+
       - { label: "Activo", name: "activo", widget: "boolean", default: true }
