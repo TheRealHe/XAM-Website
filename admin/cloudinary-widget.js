@@ -6,51 +6,14 @@
         `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
     // ---------------------------------------------------------
-    // Utilidades
+    // Optimizar URL de Cloudinary
     // ---------------------------------------------------------
 
-    function getPublicIdFromUrl(url) {
-        if (!url || typeof url !== "string") return "";
-
-        try {
-            const parts = url.split("/upload/");
-
-            if (parts.length < 2) return "";
-
-            let path = parts[1];
-
-            // Elimina transformaciones de Cloudinary
-            path = path.replace(/^.*?\//, function (match) {
-                // Si después de upload hay transformaciones,
-                // intentamos conservar el public_id.
-                if (
-                    match.includes("f_") ||
-                    match.includes("q_") ||
-                    match.includes("w_") ||
-                    match.includes("h_") ||
-                    match.includes("c_")
-                ) {
-                    return "";
-                }
-
-                return match;
-            });
-
-            // Elimina extensión
-            path = path.replace(/\.[^/.]+$/, "");
-
-            return path;
-        } catch (error) {
-            return "";
-        }
-    }
-
-    function optimizedUrl(url) {
+    function optimizeCloudinaryUrl(url) {
         if (!url || typeof url !== "string") {
             return url;
         }
 
-        // Si ya contiene transformaciones, no las duplicamos.
         if (url.includes("/f_auto,q_auto/")) {
             return url;
         }
@@ -62,19 +25,23 @@
     }
 
     // ---------------------------------------------------------
-    // Subir una imagen a Cloudinary
+    // Subir imagen
     // ---------------------------------------------------------
 
-    async function uploadImage(file, onProgress) {
+    function uploadImage(file, onProgress) {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
 
             xhr.open("POST", UPLOAD_URL);
 
             xhr.upload.addEventListener("progress", function (event) {
-                if (event.lengthComputable && onProgress) {
-                    const percentage =
-                        Math.round((event.loaded / event.total) * 100);
+                if (
+                    event.lengthComputable &&
+                    typeof onProgress === "function"
+                ) {
+                    const percentage = Math.round(
+                        (event.loaded / event.total) * 100
+                    );
 
                     onProgress(percentage);
                 }
@@ -83,40 +50,54 @@
             xhr.addEventListener("load", function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
-                        const response = JSON.parse(xhr.responseText);
+                        const data = JSON.parse(xhr.responseText);
 
-                        if (!response.secure_url) {
+                        if (!data.secure_url) {
                             reject(
                                 new Error(
-                                    "Cloudinary no devolvió una URL válida."
+                                    "Cloudinary no devolvió una URL."
                                 )
                             );
                             return;
                         }
 
-                        resolve(optimizedUrl(response.secure_url));
+                        resolve(
+                            optimizeCloudinaryUrl(
+                                data.secure_url
+                            )
+                        );
+
                     } catch (error) {
                         reject(
                             new Error(
-                                "La respuesta de Cloudinary no es válida."
+                                "Respuesta inválida de Cloudinary."
                             )
                         );
                     }
-                } else {
-                    let message = "Error subiendo la imagen.";
 
-                    try {
-                        const response = JSON.parse(xhr.responseText);
+                    return;
+                }
 
-                        if (response.error && response.error.message) {
-                            message = response.error.message;
-                        }
-                    } catch (error) {
-                        // Ignoramos el error de parsing.
+                let message =
+                    "Cloudinary rechazó la subida.";
+
+                try {
+                    const data =
+                        JSON.parse(xhr.responseText);
+
+                    if (
+                        data.error &&
+                        data.error.message
+                    ) {
+                        message =
+                            data.error.message;
                     }
 
-                    reject(new Error(message));
+                } catch (error) {
+                    // No hacemos nada.
                 }
+
+                reject(new Error(message));
             });
 
             xhr.addEventListener("error", function () {
@@ -138,28 +119,33 @@
             const formData = new FormData();
 
             formData.append("file", file);
-            formData.append("upload_preset", UPLOAD_PRESET);
-
-            // Asset folder configurado también desde el preset.
-            // No necesitamos ponerlo aquí si ya lo configuraste
-            // en Cloudinary.
+            formData.append(
+                "upload_preset",
+                UPLOAD_PRESET
+            );
 
             xhr.send(formData);
         });
     }
 
     // ---------------------------------------------------------
-    // Estilos del widget
+    // CSS
     // ---------------------------------------------------------
 
     function injectStyles() {
-        if (document.getElementById("xam-cloudinary-styles")) {
+        if (
+            document.getElementById(
+                "xam-cloudinary-styles"
+            )
+        ) {
             return;
         }
 
-        const style = document.createElement("style");
+        const style =
+            document.createElement("style");
 
-        style.id = "xam-cloudinary-styles";
+        style.id =
+            "xam-cloudinary-styles";
 
         style.textContent = `
             .xam-cloudinary {
@@ -173,7 +159,7 @@
                 text-align: center;
                 cursor: pointer;
                 background: #fafafa;
-                transition: all 0.2s ease;
+                transition: 0.2s;
                 margin-bottom: 15px;
             }
 
@@ -185,11 +171,6 @@
             .xam-cloudinary-dropzone.dragging {
                 border-color: #0085ba;
                 background: #eef8ff;
-            }
-
-            .xam-cloudinary-dropzone.disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
             }
 
             .xam-cloudinary-title {
@@ -205,6 +186,12 @@
 
             .xam-cloudinary-input {
                 display: none;
+            }
+
+            .xam-cloudinary-count {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 10px;
             }
 
             .xam-cloudinary-list {
@@ -251,6 +238,10 @@
                 margin-top: 5px;
             }
 
+            .xam-cloudinary-error {
+                color: #d33;
+            }
+
             .xam-cloudinary-progress {
                 height: 5px;
                 background: #eee;
@@ -263,7 +254,7 @@
                 height: 100%;
                 width: 0%;
                 background: #0085ba;
-                transition: width 0.15s ease;
+                transition: width 0.15s;
             }
 
             .xam-cloudinary-remove {
@@ -273,21 +264,10 @@
                 cursor: pointer;
                 font-size: 18px;
                 padding: 5px;
-                flex-shrink: 0;
             }
 
             .xam-cloudinary-remove:hover {
                 color: #a00;
-            }
-
-            .xam-cloudinary-error {
-                color: #d33;
-            }
-
-            .xam-cloudinary-count {
-                font-size: 13px;
-                color: #666;
-                margin-bottom: 10px;
             }
         `;
 
@@ -295,15 +275,15 @@
     }
 
     // ---------------------------------------------------------
-    // Widget Control
+    // Control
     // ---------------------------------------------------------
 
     const CloudinaryControl = createClass({
 
         getInitialState: function () {
             return {
-                uploading: 0,
-                dragging: false
+                dragging: false,
+                uploads: []
             };
         },
 
@@ -311,133 +291,220 @@
             injectStyles();
         },
 
-        handleFiles: async function (files) {
-            const validFiles = Array.from(files).filter(function (file) {
-                return file.type && file.type.startsWith("image/");
-            });
+        handleFiles: function (fileList) {
 
-            if (validFiles.length === 0) {
+            const files =
+                Array.from(fileList).filter(
+                    function (file) {
+                        return (
+                            file.type &&
+                            file.type.startsWith(
+                                "image/"
+                            )
+                        );
+                    }
+                );
+
+            if (files.length === 0) {
                 return;
             }
 
-            const currentValue = Array.isArray(this.props.value)
-                ? this.props.value
-                : [];
-
-            const newUrls = [];
             const self = this;
 
-            this.setState({
-                uploading: validFiles.length
-            });
-
-            for (const file of validFiles) {
-
-                const temporaryId =
-                    `upload-${Date.now()}-${Math.random()}`;
-
-                // Añadimos una entrada temporal para mostrar
-                // el progreso mientras se sube.
-                this.setState(function (state) {
-
+            // Creamos los objetos temporales.
+            const uploads = files.map(
+                function (file, index) {
                     return {
-                        [`${temporaryId}`]: {
-                            id: temporaryId,
-                            name: file.name,
-                            progress: 0,
-                            status: "Subiendo..."
-                        }
+                        id:
+                            Date.now() +
+                            "-" +
+                            Math.random() +
+                            "-" +
+                            index,
+
+                        file: file,
+
+                        name: file.name,
+
+                        progress: 0,
+
+                        status: "Preparando...",
+
+                        error: false
                     };
+                }
+            );
 
-                });
+            this.setState(
+                function (state) {
+                    return {
+                        uploads:
+                            state.uploads.concat(
+                                uploads
+                            )
+                    };
+                }
+            );
 
-                try {
+            // Subimos todos.
+            uploads.forEach(
+                function (upload) {
 
-                    const url = await uploadImage(
-                        file,
+                    uploadImage(
+                        upload.file,
+
                         function (progress) {
 
-                            self.setState(function () {
-                                return {
-                                    [`${temporaryId}`]: {
-                                        id: temporaryId,
-                                        name: file.name,
-                                        progress: progress,
-                                        status: `Subiendo... ${progress}%`
-                                    }
-                                };
-                            });
+                            self.updateUpload(
+                                upload.id,
+                                {
+                                    progress:
+                                        progress,
+                                    status:
+                                        `Subiendo... ${progress}%`
+                                }
+                            );
 
                         }
-                    );
+                    )
+                        .then(function (url) {
 
-                    newUrls.push(url);
+                            // Añadimos la URL al array
+                            // que controla Decap.
+                            const currentValue =
+                                Array.isArray(
+                                    self.props.value
+                                )
+                                    ? self.props.value
+                                    : [];
 
-                    self.setState(function () {
-                        return {
-                            [`${temporaryId}`]: {
-                                id: temporaryId,
-                                name: file.name,
-                                progress: 100,
-                                status: "✓ Subida"
-                            }
-                        };
-                    });
+                            self.props.onChange(
+                                currentValue.concat(
+                                    url
+                                )
+                            );
 
-                } catch (error) {
+                            self.updateUpload(
+                                upload.id,
+                                {
+                                    progress: 100,
+                                    status:
+                                        "✓ Subida"
+                                }
+                            );
 
-                    console.error(
-                        "Cloudinary upload error:",
-                        error
-                    );
+                            // Quitamos la entrada temporal
+                            // después de un momento.
+                            setTimeout(
+                                function () {
 
-                    self.setState(function () {
-                        return {
-                            [`${temporaryId}`]: {
-                                id: temporaryId,
-                                name: file.name,
-                                progress: 0,
-                                status: `Error: ${error.message}`,
-                                error: true
-                            }
-                        };
-                    });
+                                    self.removeUpload(
+                                        upload.id
+                                    );
+
+                                },
+                                1000
+                            );
+
+                        })
+                        .catch(function (error) {
+
+                            console.error(
+                                "Cloudinary:",
+                                error
+                            );
+
+                            self.updateUpload(
+                                upload.id,
+                                {
+                                    status:
+                                        "Error: " +
+                                        error.message,
+
+                                    error: true
+                                }
+                            );
+
+                        });
                 }
-            }
+            );
+        },
 
-            // Guardamos solamente URLs.
-            // IMPORTANTE: esto produce:
-            //
-            // "imagenes": [
-            //     "https://...",
-            //     "https://..."
-            // ]
-            //
-            // y NO objetos.
+        updateUpload: function (id, changes) {
 
-            if (newUrls.length > 0) {
+            this.setState(
+                function (state) {
 
-                const updatedValue = [
-                    ...currentValue,
-                    ...newUrls
-                ];
+                    return {
+                        uploads:
+                            state.uploads.map(
+                                function (upload) {
 
-                this.props.onChange(updatedValue);
-            }
+                                    if (
+                                        upload.id === id
+                                    ) {
+                                        return {
+                                            ...upload,
+                                            ...changes
+                                        };
+                                    }
 
-            this.setState({
-                uploading: 0
-            });
+                                    return upload;
+                                }
+                            )
+                    };
+                }
+            );
+        },
+
+        removeUpload: function (id) {
+
+            this.setState(
+                function (state) {
+
+                    return {
+                        uploads:
+                            state.uploads.filter(
+                                function (upload) {
+                                    return (
+                                        upload.id !== id
+                                    );
+                                }
+                            )
+                    };
+                }
+            );
         },
 
         handleInputChange: function (event) {
-            this.handleFiles(event.target.files);
 
-            // Permite volver a seleccionar el mismo archivo.
+            this.handleFiles(
+                event.target.files
+            );
+
             event.target.value = "";
         },
 
+        handleDragOver: function (event) {
+
+            event.preventDefault();
+
+            this.setState({
+                dragging: true
+            });
+        },
+
+        handleDragLeave: function (event) {
+
+            event.preventDefault();
+
+            this.setState({
+                dragging: false
+            });
+        },
+
         handleDrop: function (event) {
+
             event.preventDefault();
 
             this.setState({
@@ -454,109 +521,90 @@
             }
         },
 
-        handleDragOver: function (event) {
-            event.preventDefault();
-
-            this.setState({
-                dragging: true
-            });
-        },
-
-        handleDragLeave: function (event) {
-            event.preventDefault();
-
-            this.setState({
-                dragging: false
-            });
-        },
-
         removeImage: function (index) {
-            const currentValue = Array.isArray(this.props.value)
-                ? this.props.value
-                : [];
 
-            const updatedValue = currentValue.filter(
-                function (_, i) {
-                    return i !== index;
-                }
+            const value =
+                Array.isArray(this.props.value)
+                    ? this.props.value
+                    : [];
+
+            const newValue =
+                value.filter(
+                    function (_, i) {
+                        return i !== index;
+                    }
+                );
+
+            this.props.onChange(
+                newValue
             );
-
-            this.props.onChange(updatedValue);
-        },
-
-        moveImage: function (fromIndex, toIndex) {
-            const currentValue = Array.isArray(this.props.value)
-                ? [...this.props.value]
-                : [];
-
-            if (
-                toIndex < 0 ||
-                toIndex >= currentValue.length
-            ) {
-                return;
-            }
-
-            const item = currentValue.splice(fromIndex, 1)[0];
-
-            currentValue.splice(toIndex, 0, item);
-
-            this.props.onChange(currentValue);
         },
 
         render: function () {
 
-            const value = Array.isArray(this.props.value)
-                ? this.props.value
-                : [];
+            const value =
+                Array.isArray(this.props.value)
+                    ? this.props.value
+                    : [];
 
-            const uploadingItems = Object.keys(this.state)
-                .filter(function (key) {
-                    return key.startsWith("upload-");
-                })
-                .map(function (key) {
-                    return this.state[key];
-                });
+            const uploads =
+                this.state.uploads || [];
 
             const self = this;
 
             return h(
                 "div",
                 {
-                    className: "xam-cloudinary"
+                    className:
+                        "xam-cloudinary"
                 },
 
+                // INPUT
                 h(
                     "input",
                     {
                         id: this.props.forID,
-                        className: "xam-cloudinary-input",
+
+                        className:
+                            "xam-cloudinary-input",
+
                         type: "file",
+
                         accept: "image/*",
+
                         multiple: true,
-                        onChange: this.handleInputChange
+
+                        onChange:
+                            this.handleInputChange
                     }
                 ),
 
+                // DROPZONE
                 h(
                     "label",
                     {
-                        htmlFor: this.props.forID,
+                        htmlFor:
+                            this.props.forID,
+
                         className:
                             "xam-cloudinary-dropzone" +
-                            (this.state.dragging
-                                ? " dragging"
-                                : "") +
-                            (this.state.uploading > 0
-                                ? " disabled"
-                                : ""),
+                            (
+                                this.state.dragging
+                                    ? " dragging"
+                                    : ""
+                            ),
 
-                        onDragOver: this.handleDragOver,
+                        onDragOver:
+                            this.handleDragOver,
 
-                        onDragEnter: this.handleDragOver,
+                        onDragEnter:
+                            this.handleDragOver,
 
-                        onDragLeave: this.handleDragLeave,
+                        onDragLeave:
+                            this.handleDragLeave,
 
-                        onDrop: this.handleDrop
+                        onDrop:
+                            this.handleDrop
                     },
 
                     h(
@@ -578,6 +626,7 @@
                     )
                 ),
 
+                // CONTADOR
                 value.length > 0
                     ? h(
                         "div",
@@ -585,10 +634,10 @@
                             className:
                                 "xam-cloudinary-count"
                         },
-                        `${value.length} imagen${
+                        `${value.length} ${
                             value.length === 1
-                                ? ""
-                                : "es"
+                                ? "imagen"
+                                : "imágenes"
                         } seleccionada${
                             value.length === 1
                                 ? ""
@@ -597,6 +646,7 @@
                     )
                     : null,
 
+                // IMÁGENES YA SUBIDAS
                 h(
                     "div",
                     {
@@ -604,165 +654,196 @@
                             "xam-cloudinary-list"
                     },
 
-                    value.map(function (url, index) {
+                    value.map(
+                        function (url, index) {
 
-                        return h(
-                            "div",
-                            {
-                                className:
-                                    "xam-cloudinary-item",
-                                key: url + index
-                            },
-
-                            h(
-                                "img",
-                                {
-                                    className:
-                                        "xam-cloudinary-preview",
-                                    src: url,
-                                    alt:
-                                        `Imagen ${index + 1}`
-                                }
-                            ),
-
-                            h(
+                            return h(
                                 "div",
                                 {
                                     className:
-                                        "xam-cloudinary-info"
+                                        "xam-cloudinary-item",
+
+                                    key:
+                                        url +
+                                        "-" +
+                                        index
                                 },
 
                                 h(
-                                    "div",
+                                    "img",
                                     {
                                         className:
-                                            "xam-cloudinary-name"
-                                    },
-                                    getPublicIdFromUrl(url) ||
-                                        `Imagen ${index + 1}`
-                                ),
+                                            "xam-cloudinary-preview",
 
-                                h(
-                                    "div",
-                                    {
-                                        className:
-                                            "xam-cloudinary-status"
-                                    },
-                                    "✓ Cloudinary"
-                                )
-                            ),
+                                        src: url,
 
-                            h(
-                                "button",
-                                {
-                                    type: "button",
-                                    className:
-                                        "xam-cloudinary-remove",
-                                    onClick: function () {
-                                        self.removeImage(index);
-                                    },
-                                    title:
-                                        "Eliminar imagen"
-                                },
-                                "✕"
-                            )
-                        );
-                    }),
-
-                    uploadingItems.map(function (item) {
-
-                        return h(
-                            "div",
-                            {
-                                className:
-                                    "xam-cloudinary-item",
-                                key: item.id
-                            },
-
-                            h(
-                                "div",
-                                {
-                                    className:
-                                        "xam-cloudinary-preview",
-                                    style: {
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center"
+                                        alt:
+                                            `Imagen ${
+                                                index + 1
+                                            }`
                                     }
-                                },
-                                "⏳"
-                            ),
-
-                            h(
-                                "div",
-                                {
-                                    className:
-                                        "xam-cloudinary-info"
-                                },
-
-                                h(
-                                    "div",
-                                    {
-                                        className:
-                                            "xam-cloudinary-name"
-                                    },
-                                    item.name
                                 ),
 
                                 h(
                                     "div",
                                     {
                                         className:
-                                            "xam-cloudinary-status" +
-                                            (
-                                                item.error
-                                                    ? " xam-cloudinary-error"
-                                                    : ""
-                                            )
-                                    },
-                                    item.status
-                                ),
-
-                                h(
-                                    "div",
-                                    {
-                                        className:
-                                            "xam-cloudinary-progress"
+                                            "xam-cloudinary-info"
                                     },
 
                                     h(
                                         "div",
                                         {
                                             className:
-                                                "xam-cloudinary-progress-bar",
-                                            style: {
-                                                width:
-                                                    `${item.progress}%`
-                                            }
+                                                "xam-cloudinary-name"
+                                        },
+                                        url
+                                            .split("/")
+                                            .pop()
+                                    ),
+
+                                    h(
+                                        "div",
+                                        {
+                                            className:
+                                                "xam-cloudinary-status"
+                                        },
+                                        "✓ Cloudinary"
+                                    )
+                                ),
+
+                                h(
+                                    "button",
+                                    {
+                                        type: "button",
+
+                                        className:
+                                            "xam-cloudinary-remove",
+
+                                        onClick:
+                                            function () {
+                                                self.removeImage(
+                                                    index
+                                                );
+                                            },
+
+                                        title:
+                                            "Eliminar imagen"
+                                    },
+                                    "✕"
+                                )
+                            );
+                        }
+                    ),
+
+                    // UPLOADS EN PROGRESO
+                    uploads.map(
+                        function (upload) {
+
+                            return h(
+                                "div",
+                                {
+                                    className:
+                                        "xam-cloudinary-item",
+
+                                    key:
+                                        upload.id
+                                },
+
+                                h(
+                                    "div",
+                                    {
+                                        className:
+                                            "xam-cloudinary-preview",
+
+                                        style: {
+                                            display:
+                                                "flex",
+
+                                            alignItems:
+                                                "center",
+
+                                            justifyContent:
+                                                "center"
                                         }
+                                    },
+                                    "⏳"
+                                ),
+
+                                h(
+                                    "div",
+                                    {
+                                        className:
+                                            "xam-cloudinary-info"
+                                    },
+
+                                    h(
+                                        "div",
+                                        {
+                                            className:
+                                                "xam-cloudinary-name"
+                                        },
+                                        upload.name
+                                    ),
+
+                                    h(
+                                        "div",
+                                        {
+                                            className:
+                                                "xam-cloudinary-status" +
+                                                (
+                                                    upload.error
+                                                        ? " xam-cloudinary-error"
+                                                        : ""
+                                                )
+                                        },
+                                        upload.status
+                                    ),
+
+                                    h(
+                                        "div",
+                                        {
+                                            className:
+                                                "xam-cloudinary-progress"
+                                        },
+
+                                        h(
+                                            "div",
+                                            {
+                                                className:
+                                                    "xam-cloudinary-progress-bar",
+
+                                                style: {
+                                                    width:
+                                                        `${upload.progress}%`
+                                                }
+                                            }
+                                        )
                                     )
                                 )
-                            )
-                        );
-                    })
+                            );
+                        }
+                    )
                 )
             );
         }
     });
 
     // ---------------------------------------------------------
-    // Widget Preview
+    // Preview
     // ---------------------------------------------------------
 
     const CloudinaryPreview = createClass({
 
         render: function () {
 
-            const value = Array.isArray(this.props.value)
-                ? this.props.value
-                : [];
+            const value =
+                Array.isArray(this.props.value)
+                    ? this.props.value
+                    : [];
 
             if (value.length === 0) {
+
                 return h(
                     "div",
                     {},
@@ -780,25 +861,33 @@
                     }
                 },
 
-                value.map(function (url, index) {
+                value.map(
+                    function (url, index) {
 
-                    return h(
-                        "img",
-                        {
-                            key: url + index,
-                            src: url,
-                            alt:
-                                `Imagen ${index + 1}`,
-                            style: {
-                                width: "100px",
-                                height: "100px",
-                                objectFit: "cover",
-                                borderRadius: "6px"
+                        return h(
+                            "img",
+                            {
+                                key:
+                                    url +
+                                    index,
+
+                                src: url,
+
+                                alt:
+                                    `Imagen ${
+                                        index + 1
+                                    }`,
+
+                                style: {
+                                    width: "100px",
+                                    height: "100px",
+                                    objectFit: "cover",
+                                    borderRadius: "6px"
+                                }
                             }
-                        }
-                    );
-
-                })
+                        );
+                    }
+                )
             );
         }
     });
@@ -812,8 +901,9 @@
         if (
             typeof CMS === "undefined"
         ) {
+
             console.error(
-                "XAM Cloudinary Widget: Decap CMS no está disponible."
+                "XAM Cloudinary Widget: CMS no está disponible."
             );
 
             return;
@@ -821,17 +911,20 @@
 
         CMS.registerWidget(
             "cloudinary",
+
             CloudinaryControl,
+
             CloudinaryPreview
         );
 
         console.log(
-            "XAM Cloudinary Widget registrado correctamente."
+            "XAM Cloudinary Widget registrado."
         );
     }
 
-    // Esperamos a que Decap exista.
-    if (typeof CMS !== "undefined") {
+    if (
+        typeof CMS !== "undefined"
+    ) {
 
         registerWidget();
 
@@ -841,7 +934,6 @@
             "load",
             registerWidget
         );
-
     }
 
 })();
