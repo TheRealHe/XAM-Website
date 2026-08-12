@@ -1,47 +1,74 @@
 media: assets/images
 
-collections:
+content:
   - name: productos
     label: Productos
-    folder: data/
-    extension: json
+    type: file
+    path: data/productos.json
     format: json
-    create: true
+    list: true
+    
     fields:
-      - { name: id, label: ID, widget: number, required: false }
-      
+      - name: id
+        label: ID
+        type: number
+        required: false
+
       - name: nombre
         label: Nombre
-        widget: object
+        type: object
         fields:
-          - { name: es, label: Español, widget: string }
-          - { name: en, label: Inglés, widget: string }
-      
+          - name: es
+            label: Español
+            type: string
+
+          - name: en
+            label: Inglés
+            type: string
+
       - name: descripcion
         label: Descripción
-        widget: object
+        type: object
         fields:
-          - { name: es, label: Español, widget: text }
-          - { name: en, label: Inglés, widget: text }
-      
-      - { name: precio, label: Precio, widget: number }
-      
+          - name: es
+            label: Español
+            type: text
+
+          - name: en
+            label: Inglés
+            type: text
+
+      - name: precio
+        label: Precio
+        type: number
+
       - name: categoria
         label: Categoría
-        widget: select
+        type: select
         options:
-          - { label: Camisas, value: camisas }
-          - { label: Accesorios, value: accesorios }
-          - { label: Pantalones, value: pantalones }
-          - { label: Zapatos, value: zapatos }
-          - { label: Faldas, value: faldas }
-          - { label: Peluches, value: peluches }
-          - { label: Maletas, value: maletas }
-      
+          - label: Camisas
+            value: camisas
+          - label: Accesorios
+            value: accesorios
+          - label: Pantalones
+            value: pantalones
+          - label: Zapatos
+            value: zapatos
+          - label: Faldas
+            value: faldas
+          - label: Peluches
+            value: peluches
+          - label: Maletas
+            value: maletas
+
       - name: imagenes
         label: Imágenes
-        widget: list
-        fields:
-          - { name: url, label: URL, widget: image }
-      
-      - { name: activo, label: Activo, widget: boolean, default: true }
+        type: image
+        options:
+          multiple: true
+          max: 20
+
+      - name: activo
+        label: Activo
+        type: boolean
+        default: true
