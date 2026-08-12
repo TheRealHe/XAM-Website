@@ -12,7 +12,7 @@ collections:
     extension: "json"
     format: "json"
     create: true
-    slug: "productos"
+    slug: "{{slug}}"
     summary: "{{nombre.es}} - ${{precio}}"
 
     fields:
