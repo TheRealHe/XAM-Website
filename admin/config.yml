@@ -47,14 +47,6 @@ collections:
           
       - label: "Imágenes"
         name: "imagenes"
-        widget: "list"
-        field:
-          widget: "image"
-          label: "Imágen"
-          name: "imagen"
-          media_library:
-            config:
-              multiple: true  
-        default: []
+        widget: "cloudinary"
       
       - { label: "Activo", name: "activo", widget: "boolean", default: true }
