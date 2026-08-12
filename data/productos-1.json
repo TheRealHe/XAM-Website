@@ -1,0 +1,18 @@
+{
+  "activo": true,
+  "imagenes": [
+    "https://res.cloudinary.com/k3pbhkqi/image/upload/f_auto,q_auto/v1786555784/nqdzgzxlunwlmchkbbjz.png",
+    "https://res.cloudinary.com/k3pbhkqi/image/upload/f_auto,q_auto/v1786555787/apryce4gn5z85gz0wvgx.png"
+  ],
+  "id": 2,
+  "nombre": {
+    "es": "Aretes de Corazon Negro Encadenado",
+    "en": "Chained Black Heart Earrings"
+  },
+  "precio": 18000,
+  "descripcion": {
+    "es": "Aretes goticos hechos con aleacion de Zing, libres de Nickel.",
+    "en": "Gothic earrings made of zinc alloy, nickel-free."
+  },
+  "categoria": "accesorios"
+}
