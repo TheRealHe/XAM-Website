@@ -1,54 +1,48 @@
-backend:
-  name: github
-  repo: TheRealHe/XAM-Website
-  branch: master
+media: assets/images
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
-
-collections:
-  - name: "productos"
-    label: "Productos"
-    folder: "data/"
-    extension: "json"
-    format: "json"
+content:
+  - name: productos
+    label: Productos
+    type: collection
+    path: data/
+    filename: "productos"
+    format: json
     create: true
-    slug: "{{fields.nombre.es | slugify}}"
-    summary: "{{fields.nombre.es}} - ${{fields.precio}}"
-
     fields:
-      - { label: "ID", name: "id", widget: "number", required: false }
+      - { name: id, label: ID, type: number, required: false }
       
-      - label: "Nombre"
-        name: "nombre"
-        widget: "object"
+      - name: nombre
+        label: Nombre
+        type: object
         fields:
-          - { label: "Español", name: "es", widget: "string" }
-          - { label: "Inglés", name: "en", widget: "string" }
+          - { name: es, label: Español, type: string }
+          - { name: en, label: Inglés, type: string }
       
-      - label: "Descripción"
-        name: "descripcion"
-        widget: "object"
+      - name: descripcion
+        label: Descripción
+        type: object
         fields:
-          - { label: "Español", name: "es", widget: "text" }
-          - { label: "Inglés", name: "en", widget: "text" }
+          - { name: es, label: Español, type: text }
+          - { name: en, label: Inglés, type: text }
       
-      - { label: "Precio", name: "precio", widget: "number" }
+      - { name: precio, label: Precio, type: number }
       
-      - label: "Categoría"
-        name: "categoria"
-        widget: "select"
+      - name: categoria
+        label: Categoría
+        type: select
         options:
-          - { label: "Camisas", value: "camisas" }
-          - { label: "Accesorios", value: "accesorios" }
-          - { label: "Pantalones", value: "pantalones" }
-          - { label: "Zapatos", value: "zapatos" }
-          - { label: "Faldas", value: "faldas" }
-          - { label: "Peluches", value: "peluches" }
-          - { label: "Maletas", value: "maletas" }
+          - { label: Camisas, value: camisas }
+          - { label: Accesorios, value: accesorios }
+          - { label: Pantalones, value: pantalones }
+          - { label: Zapatos, value: zapatos }
+          - { label: Faldas, value: faldas }
+          - { label: Peluches, value: peluches }
+          - { label: Maletas, value: maletas }
       
-      - label: "Imágenes"
-        name: "imagenes"
-        widget: "cloudinary"
+      - name: imagenes
+        label: Imágenes
+        type: list
+        fields:
+          - { name: url, label: URL, type: image }
       
-      - { label: "Activo", name: "activo", widget: "boolean", default: true }
+      - { name: activo, label: Activo, type: boolean, default: true }
