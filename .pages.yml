@@ -1,35 +1,34 @@
 media: assets/images
 
-content:
+collections:
   - name: productos
     label: Productos
-    type: collection
-    path: data/
-    filename: "productos"
+    folder: data/
+    extension: json
     format: json
     create: true
     fields:
-      - { name: id, label: ID, type: number, required: false }
+      - { name: id, label: ID, widget: number, required: false }
       
       - name: nombre
         label: Nombre
-        type: object
+        widget: object
         fields:
-          - { name: es, label: Español, type: string }
-          - { name: en, label: Inglés, type: string }
+          - { name: es, label: Español, widget: string }
+          - { name: en, label: Inglés, widget: string }
       
       - name: descripcion
         label: Descripción
-        type: object
+        widget: object
         fields:
-          - { name: es, label: Español, type: text }
-          - { name: en, label: Inglés, type: text }
+          - { name: es, label: Español, widget: text }
+          - { name: en, label: Inglés, widget: text }
       
-      - { name: precio, label: Precio, type: number }
+      - { name: precio, label: Precio, widget: number }
       
       - name: categoria
         label: Categoría
-        type: select
+        widget: select
         options:
           - { label: Camisas, value: camisas }
           - { label: Accesorios, value: accesorios }
@@ -41,8 +40,8 @@ content:
       
       - name: imagenes
         label: Imágenes
-        type: list
+        widget: list
         fields:
-          - { name: url, label: URL, type: image }
+          - { name: url, label: URL, widget: image }
       
-      - { name: activo, label: Activo, type: boolean, default: true }
+      - { name: activo, label: Activo, widget: boolean, default: true }
