@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Gestión de Productos - XAM Goth Apparel</title>
-    <!-- Incluye el widget de Netlify Identity -->
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- Estilos de Static CMS -->
+    <link rel="stylesheet" href="https://unpkg.com/@staticcms/app@^4.0.0/dist/main.css" />
   </head>
   <body>
-    <!-- Inicializa Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- 1. Carga Static CMS -->
+    <script src="https://unpkg.com/@staticcms/app@^4.0.0/dist/static-cms-app.js"></script>
+    
+    <!-- 2. Carga tu widget personalizado (DESPUÉS de Static CMS) -->
+    <script src="/admin/cloudinary-widget.js"></script>
+    
+    <!-- 3. Inicializa Static CMS -->
+    <script>
+      CMS.init();
+    </script>
+    
   </body>
 </html>
