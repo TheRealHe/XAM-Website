@@ -3,24 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pages CMS</title>
+  <title>Editor</title>
 </head>
 <body>
+  <!-- Cargar Pages CMS -->
   <script src="https://unpkg.com/pages-cms@latest/dist/pages-cms.js"></script>
   
-  <!-- Tu widget de Cloudinary -->
-  <script src="cloudinary_widget.js"></script>
+  <!-- Cargar tu widget de Cloudinary -->
+  <script src="cloudinary-widget.js"></script>
   
   <script>
-    // Configuración de Pages CMS
-    window.PAGES_CMS_CONFIG = {
-      // Tu configuración aquí
-    }
-    
-    // Registrar el widget
-    if (window.PagesCMS) {
-      PagesCMS.registerWidget('cloudinary', CloudinaryWidget)
-    }
+    // Registrar widget cuando Pages CMS esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof window.PagesCMS !== 'undefined' && window.CloudinaryWidget) {
+        window.PagesCMS.registerWidget('cloudinary', window.CloudinaryWidget)
+        console.log('✅ Widget Cloudinary registrado correctamente')
+      } else {
+        console.error('❌ Error: PagesCMS o CloudinaryWidget no están disponibles')
+        console.log('PagesCMS:', typeof window.PagesCMS)
+        console.log('CloudinaryWidget:', typeof window.CloudinaryWidget)
+      }
+    })
   </script>
 </body>
 </html>
