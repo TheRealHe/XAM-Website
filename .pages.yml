@@ -44,22 +44,15 @@ content:
 
       - name: categoria
         label: Categoría
-        type: select
+        widget: select
         options:
-          - label: Camisas
-            value: camisas
-          - label: Accesorios
-            value: accesorios
-          - label: Pantalones
-            value: pantalones
-          - label: Zapatos
-            value: zapatos
-          - label: Faldas
-            value: faldas
-          - label: Peluches
-            value: peluches
-          - label: Maletas
-            value: maletas
+          - { label: "Camisas", value: "camisas" }
+          - { label: "Accesorios", value: "accesorios" }
+          - { label: "Pantalones", value: "pantalones" }
+          - { label: "Zapatos", value: "zapatos" }
+          - { label: "Faldas", value: "faldas" }
+          - { label: "Peluches", value: "peluches" }
+          - { label: "Maletas", value: "maletas" }
 
       - name: imagenes
         label: Imágenes
