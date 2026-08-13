@@ -46,20 +46,14 @@ content:
         label: Categoría
         type: select
         options:
-          - label: Camisas
-            value: camisas
-          - label: Accesorios
-            value: accesorios
-          - label: Pantalones
-            value: pantalones
-          - label: Zapatos
-            value: zapatos
-          - label: Faldas
-            value: faldas
-          - label: Peluches
-            value: peluches
-          - label: Maletas
-            value: maletas
+          values:
+            - { label: "Accesorios", value: "accesorios" }
+            - { label: "Camisas", value: "camisas" }
+            - { label: "Faldas", value: "faldas" }
+            - { label: "Maletas", value: "maletas" }
+            - { label: "Pantalones", value: "pantalones" }
+            - { label: "Peluches", value: "peluches" }
+            - { label: "Zapatos", value: "zapatos" }
 
       - name: imagenes
         label: Imágenes
