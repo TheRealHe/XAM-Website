@@ -47,13 +47,13 @@ content:
         type: select
         options:
           values:
-            - { label: "Camisas", value: "camisas" }
             - { label: "Accesorios", value: "accesorios" }
-            - { label: "Pantalones", value: "pantalones" }
-            - { label: "Zapatos", value: "zapatos" }
+            - { label: "Camisas", value: "camisas" }
             - { label: "Faldas", value: "faldas" }
-            - { label: "Peluches", value: "peluches" }
             - { label: "Maletas", value: "maletas" }
+            - { label: "Pantalones", value: "pantalones" }
+            - { label: "Peluches", value: "peluches" }
+            - { label: "Zapatos", value: "zapatos" }
 
       - name: imagenes
         label: Imágenes
