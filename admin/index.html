@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <title>Gestión de Productos - XAM Goth Apparel</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pages CMS</title>
+</head>
+<body>
+  <script src="https://unpkg.com/pages-cms@latest/dist/pages-cms.js"></script>
+  
+  <!-- Tu widget de Cloudinary -->
+  <script src="/admin/cloudinary_widget.js"></script>
+  
+  <script>
+    // Configuración de Pages CMS
+    window.PAGES_CMS_CONFIG = {
+      // Tu configuración aquí
+    }
     
-    <!-- Estilos de Static CMS -->
-    <link rel="stylesheet" href="https://unpkg.com/@staticcms/app@^4.0.0/dist/main.css" />
-  </head>
-  <body>
-    <!-- 1. Carga Static CMS -->
-    <script src="https://unpkg.com/@staticcms/app@^4.0.0/dist/static-cms-app.js"></script>
-    
-    <!-- 2. Carga tu widget personalizado (DESPUÉS de Static CMS) -->
-    <script src="/admin/cloudinary-widget.js"></script>
-    
-    <!-- 3. Inicializa Static CMS -->
-    <script>
-      CMS.init();
-    </script>
-    
-  </body>
+    // Registrar el widget
+    if (window.PagesCMS) {
+      PagesCMS.registerWidget('cloudinary', CloudinaryWidget)
+    }
+  </script>
+</body>
 </html>
