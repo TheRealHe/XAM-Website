@@ -60,7 +60,7 @@ content:
         type: image
         options:
           multiple: true
-          max: 20
+            max: 20
 
       - name: activo
         label: Activo
