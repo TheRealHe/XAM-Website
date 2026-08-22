@@ -305,12 +305,6 @@ footer .social-icons a:hover {
 /* ==========================================
    MAPA DE GOOGLE MAPS MEJORADO
    ========================================== */
-.map-section {
-    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-    border-top: 1px solid #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
-    padding: 3rem 0;
-}
 
 .map-section .section-title {
     font-family: var(--gothic-font);
