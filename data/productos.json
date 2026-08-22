@@ -57,5 +57,23 @@
       "/assets/images/bunny_ear_black.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 4,
+    "nombre": {
+      "es": "Aretes de Corazón Derretido con Cadena",
+      "en": "Melting Heart Chain Earrings"
+    },
+    "descripcion": {
+      "es": "Aretes góticos de corazón derretido hechos de aleación de zinc y libres de níquel, con detalle de cadena.",
+      "en": "Gothic melting heart earrings made of zinc alloy and nickel-free, with chain detail."
+    },
+    "precio": 20000,
+    "categoria": "accesorios",
+    "imagenes": [
+      "/assets/images/earring_heart_1.webp",
+      "/assets/images/earring_heart_2.webp"
+    ],
+    "activo": true
   }
 ]
