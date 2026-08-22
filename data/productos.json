@@ -187,5 +187,23 @@
       "/assets/images/tshirt 3.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 11,
+    "nombre": {
+      "es": "Falda Gótica de Capas con Cruces y Corchetes",
+      "en": "Gothic Layered Skirt with Crosses and Eyelets"
+    },
+    "descripcion": {
+      "es": "Falda gótica de múltiples capas con cintura ajustable, decoración de cruces metálicas y ojales. Disponible en negro y blanco.",
+      "en": "Gothic multi-layered skirt with adjustable waist, metallic cross decor, and eyelets. Available in black and white."
+    },
+    "precio": 60000,
+    "categoria": "faldas",
+    "imagenes": [
+      "/assets/images/skirt 2.webp",
+      "/assets/images/skirt 1.webp"
+    ],
+    "activo": true
   }
 ]
