@@ -52,7 +52,7 @@ const traducciones = {
     'map-note': { 
         es: ' XAM Goth Apparel es una marca independiente. Nuestros productos están disponibles en este punto de venta gracias a nuestro socio comercial.', 
         en: ' XAM Goth Apparel is an independent brand. Our products are available at this location thanks to our business partner.' 
-},
+    },
 };
 
 // ==================================================
@@ -108,13 +108,26 @@ function renderizarProductos() {
         const carouselId = `carousel-${p.id}-${index}`;
         const tieneMultiples = p.imagenes && p.imagenes.length > 1;
         
+        // ===== FUNCIÓN PARA LIMPIAR LA RUTA DE LA IMAGEN =====
+        function limpiarRutaImagen(ruta) {
+            if (!ruta || typeof ruta !== 'string') return '';
+            // Si empieza con '/', la eliminamos
+            if (ruta.startsWith('/')) {
+                return ruta.substring(1);
+            }
+            return ruta;
+        }
+        // ======================================================
+        
         // Generar imágenes
         let imagenesHTML = '';
         if (p.imagenes && p.imagenes.length > 0) {
             p.imagenes.forEach((img, idx) => {
+                // Limpiar la ruta de la imagen
+                const imgSrc = limpiarRutaImagen(img);
                 imagenesHTML += `
                     <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                        <img src="${img}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
+                        <img src="${imgSrc}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
                              style="height: 280px; object-fit: cover;">
                     </div>
                 `;
