@@ -32,8 +32,8 @@
     "precio": 25000,
     "categoria": "accesorios",
     "imagenes": [
-      "/assets/images/spicky choker 1.webp",
-      "/assets/images/spiky chocker 2.webp"
+      "/assets/images/spicky_choker_1.webp",
+      "/assets/images/spiky_chocker_2.webp"
     ],
     "activo": true
   }
