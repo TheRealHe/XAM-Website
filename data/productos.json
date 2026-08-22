@@ -168,5 +168,24 @@
       "/assets/images/shoes pose 4 (1).webp"
     ],
     "activo": true
+  },
+  {
+    "id": 10,
+    "nombre": {
+      "es": "Blusa Gótica Victoriana con Volantes",
+      "en": "Victorian Gothic Ruffle Blouse"
+    },
+    "descripcion": {
+      "es": "Blusa gótica negra de corte ajustado, con cuello alto, hombros con volantes, escote en V y botones metálicos al frente.",
+      "en": "Black gothic fitted blouse with high neck, ruffled shoulders, V-neckline, and metallic front buttons."
+    },
+    "precio": 65000,
+    "categoria": "camisas",
+    "imagenes": [
+      "/assets/images/tshirt 2.webp",
+      "/assets/images/tshirt 1-1.webp",
+      "/assets/images/tshirt 3.webp"
+    ],
+    "activo": true
   }
 ]
