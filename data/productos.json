@@ -75,5 +75,24 @@
       "/assets/images/earring_heart_2.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 5,
+    "nombre": {
+      "es": "Aretes de Cruz Gótica con Gema Roja",
+      "en": "Gothic Cross Red Gem Earrings"
+    },
+    "descripcion": {
+      "es": "Aretes de cruz gótica hechos de aleación de zinc y libres de níquel, con detalles de gema roja.",
+      "en": "Gothic cross earrings made of zinc alloy and nickel-free, with red gem details."
+    },
+    "precio": 20000,
+    "categoria": "accesorios",
+    "imagenes": [
+      "/assets/images/earring_silver_1.webp",
+      "/assets/images/earring_black_1.webp",
+      "/assets/images/earring_silver_&_black.webp"
+    ],
+    "activo": true
   }
 ]
