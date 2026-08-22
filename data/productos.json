@@ -94,5 +94,23 @@
       "/assets/images/earring_silver_&_black.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 6,
+    "nombre": {
+      "es": "Aretes de Estrella de Cuatro Puntas",
+      "en": "Four-Pointed Star Earrings"
+    },
+    "descripcion": {
+      "es": "Aretes de estrella de cuatro puntas hechos de aleación de zinc y libres de níquel.",
+      "en": "Four-pointed star earrings made of zinc alloy and nickel-free."
+    },
+    "precio": 20000,
+    "categoria": "accesorios",
+    "imagenes": [
+      "/assets/images/earring_star_1.webp",
+      "/assets/images/earring_star_2-1.webp"
+    ],
+    "activo": true
   }
 ]
