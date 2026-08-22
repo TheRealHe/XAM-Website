@@ -131,5 +131,42 @@
       "/assets/images/earring_moon_3.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 8,
+    "nombre": {
+      "es": "Pulsera Gótica de Mano Esquelética con Cadena",
+      "en": "Skeletal Hand Chain Gothic Cuff"
+    },
+    "descripcion": {
+      "es": "Pulsera gótica de mano esquelética hecha con cuero vegano, cadena y herrajes metálicos. Disponible en negro y blanco.",
+      "en": "Skeletal hand gothic cuff made of vegan leather, with chain and metallic hardware. Available in black and white."
+    },
+    "precio": 25000,
+    "categoria": "accesorios",
+    "imagenes": [
+      "/assets/images/skull bracelets b & w (1).webp",
+      "/assets/images/skull bracelets b & w back (1).webp"
+    ],
+    "activo": true
+  },
+  {
+    "id": 9,
+    "nombre": {
+      "es": "Zapatos Góticos de Plataforma con Cadena y Cruz",
+      "en": "Platform Gothic Shoes with Chain and Cross"
+    },
+    "descripcion": {
+      "es": "Zapatos góticos de plataforma de charol negro con correas, tachuelas, herrajes metálicos, cadena decorativa y detalle de cruz.",
+      "en": "Black patent leather platform gothic shoes with straps, studs, metallic hardware, decorative chain, and cross detail."
+    },
+    "precio": 120000,
+    "categoria": "zapatos",
+    "imagenes": [
+      "/assets/images/shoes pose 1 (1).webp",
+      "/assets/images/shoes pose 2 (1).webp",
+      "/assets/images/shoes pose 4 (1).webp"
+    ],
+    "activo": true
   }
 ]
