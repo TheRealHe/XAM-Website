@@ -36,5 +36,26 @@
       "/assets/images/spiky_chocker_2.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 3,
+    "nombre": {
+      "es": "Conejo de Peluche Gótico con Corazón Roto",
+      "en": "Gothic Plush Bunny with Broken Heart"
+    },
+    "descripcion": {
+      "es": "Conejo de peluche gótico disponible en negro y blanco, con detalles de cruces, cicatrices y un corazón roto cosido.",
+      "en": "Gothic plush bunny available in black and white, featuring cross details, stitches, and a sewn broken heart."
+    },
+    "precio": 55000,
+    "categoria": "peluches",
+    "imagenes": [
+      "/assets/images/bunnies_1.webp",
+      "/assets/images/bunnies_2-1.webp",
+      "/assets/images/bunnies_3.webp",
+      "/assets/images/bunny_ear_white-1.webp",
+      "/assets/images/bunny_ear_black.webp"
+    ],
+    "activo": true
   }
 ]
