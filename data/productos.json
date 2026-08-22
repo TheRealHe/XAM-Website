@@ -112,5 +112,24 @@
       "/assets/images/earring_star_2-1.webp"
     ],
     "activo": true
+  },
+  {
+    "id": 7,
+    "nombre": {
+      "es": "Aretes Luna de Sangre con Cadena",
+      "en": "Blood Moon Chain Earrings"
+    },
+    "descripcion": {
+      "es": "Aretes luna de sangre hechos de aleación de zinc, libres de níquel, con cristales y cadena colgante.",
+      "en": "Blood Moon earrings made of zinc alloy, nickel-free, with crystals and hanging chain."
+    },
+    "precio": 25000,
+    "categoria": "accesorios",
+    "imagenes": [
+      "/assets/images/moon_earring_1.webp",
+      "/assets/images/earring_moon_2.webp",
+      "/assets/images/earring_moon_3.webp"
+    ],
+    "activo": true
   }
 ]
