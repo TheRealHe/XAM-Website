@@ -303,6 +303,28 @@ footer .social-icons a:hover {
 }
 
 /* ==========================================
+   SOBRE XAM - FRASES DESTACADAS
+   ========================================== */
+.about-highlight {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic ;
+    font-weight: 300 ;
+    color: #cccccc ;
+    font-size: 1.3rem ;
+    margin-bottom: 1rem ;
+    letter-spacing: 0.2px ;
+}
+
+.about-highlight:first-of-type {
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.about-highlight:last-of-type {
+    margin-top: 0.1rem;
+}
+
+/* ==========================================
    MAPA DE GOOGLE MAPS MEJORADO
    ========================================== */
 

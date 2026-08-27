@@ -11,8 +11,16 @@ const traducciones = {
     'hero-subtitle': { es: 'Moda alternativa para almas oscuras', en: 'Alternative fashion for dark souls' },
     'hero-cta': { es: 'Explorar colección', en: 'Explore collection' },
     'about-title': { es: 'Sobre XAM', en: 'About XAM' },
-    'about-text1': { es: 'XAM Goth Apparel nació en Australia, en la búsqueda de algo que no existía: más variedad para un estilo que merecía ser vivido. En Perth, solo había una tienda (Dangerfield), y queríamos romper esa barrera.', en: 'XAM Goth Apparel was born in Australia, in search of something that didn\'t exist: more variety for a style that deserved to be lived. In Perth, there was only one store (Dangerfield), and we wanted to break that barrier.' },
-    'about-text2': { es: 'Hoy, desde Colombia, seguimos con esa misma obsesión. Usamos las conexiones que hicimos en Australia para traer productos únicos a nuestro país. Amamos esta moda y queremos que más personas se enamoren de ella al entrar a nuestra tienda.', en: 'Today, from Colombia, we continue with that same obsession. We use the connections we made in Australia to bring unique products to our country. We love this fashion and want more people to fall in love with it when they walk into our store.' },
+    'about-highlight-1': { es: 'Nacimos lejos.', en: 'We were born far away.' },
+    'about-highlight-2': { es: 'Pero encontramos nuestro lugar aquí.', en: 'But we found our place here.' },
+    'about-text1': { 
+        es: 'XAM Goth Apparel nació en Australia, en Perth, buscando algo que simplemente no encontrábamos: una propuesta diferente para quienes querían vestir fuera de lo convencional.', 
+        en: 'XAM Goth Apparel was born in Australia, in Perth, searching for something we simply couldn\'t find: a different proposal for those who wanted to dress outside the conventional.' },
+    'about-text2': { 
+        es: 'Hoy, desde Colombia, seguimos con esa misma obsesión. Usamos las conexiones que hicimos en Australia para traer productos únicos a nuestro país. Amamos esta moda y queremos que más personas se enamoren de ella al entrar a nuestra tienda.', 
+        en: 'Today, from Colombia, we continue with that same obsession. We use the connections we made in Australia to bring unique products to our country. We love this fashion and want more people to fall in love with it when they walk into our store.' },
+    'about-highlight-3': { es: 'No queremos vestir a todos.', en: 'We don\'t want to dress everyone.' },
+    'about-highlight-4': { es: 'Queremos vestir a los que siempre fueron diferentes.', en: 'We want to dress those who were always different.' },
     'value1-title': { es: 'Hecho a mano', en: 'Handcrafted' },
     'value1-desc': { es: 'Cada pieza es única y elaborada con atención al detalle.', en: 'Each piece is unique and crafted with attention to detail.' },
     'value2-title': { es: 'Sostenible', en: 'Sustainable' },
