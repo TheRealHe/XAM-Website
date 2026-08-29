@@ -21,6 +21,10 @@ const traducciones = {
         en: 'Today, from Colombia, we continue with that same obsession. We use the connections we made in Australia to bring unique products to our country. We love this fashion and want more people to fall in love with it when they walk into our store.' },
     'about-highlight-3': { es: 'No queremos vestir a todos.', en: 'We don\'t want to dress everyone.' },
     'about-highlight-4': { es: 'Queremos vestir a los que siempre fueron diferentes.', en: 'We want to dress those who were always different.' },
+    'new-title': { es: '🌙 Últimos productos', en: ' 🌙 New arrivals' },
+    'new-subtitle': { es: 'Lo más nuevo que tenemos para ti', en: 'The newest we have for you' },
+    'new-cta': { es: 'Ver todos los productos →', en: 'View all products →' },
+    'new-empty': { es: 'Pronto tendremos nuevos productos.', en: 'We\'ll have new products soon.' },
     'value1-title': { es: 'Hecho a mano', en: 'Handcrafted' },
     'value1-desc': { es: 'Cada pieza es única y elaborada con atención al detalle.', en: 'Each piece is unique and crafted with attention to detail.' },
     'value2-title': { es: 'Sostenible', en: 'Sustainable' },
@@ -45,7 +49,14 @@ const traducciones = {
     'price-more-100': { es: 'Más de $100.000', en: 'More than $100.000' },
     'buy-btn': { es: 'Comprar', en: 'Buy' },
     'no-products': { es: 'No hay productos disponibles en esta categoría.', en: 'No products available in this category.' },
-    'footer-rights': { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
+    'why-title': { es: '¿Por qué XAM?', en: 'Why XAM?' },
+    'why-subtitle': { es: 'Diferente por diseño. Auténtico por naturaleza.', en: 'Different by design. Authentic by nature.' },
+    'why-point1-title': { es: 'No se ve en cualquier calle', en: 'Not seen on any street' },
+    'why-point1-desc': { es: 'En Villavicencio, somos los únicos. En Colombia, de los pocos. Porque hay estilos que no se ven en cualquier calle, y el nuestro es uno de ellos.', en: 'In Villavicencio, we are the only ones. In Colombia, one of the few. Because there are styles that aren\'t seen on any street, and ours is one of them.' },
+    'why-point2-title': { es: 'Comunidad antes que ventas', en: 'Community over sales' },
+    'why-point2-desc': { es: 'No queremos que nos compres una vez y te olvides. Queremos que entres, te quedes, y sientas que esto también es tuyo.', en: 'We don\'t want you to buy once and forget us. We want you to walk in, stay, and feel that this is yours too.' },
+    'why-point3-title': { es: 'Estilo que cruza océanos', en: 'Style that crosses oceans' },
+    'why-point3-desc': { es: 'Cruzamos un océano para que no tengas que hacerlo tú. El estilo ya está aquí, solo falta que lo uses. Y cuando lo hagas, vas a entender por qué valió la pena.', en: 'We crossed an ocean so you don\'t have to. The style is already here, you just need to wear it. And when you do, you\'ll understand why it was worth it.' },
     'map-title': { es: '📍 Encuentra nuestros productos', en: '📍 Find our products' },
     'map-subtitle': { 
         es: 'Actualmente nuestros productos están disponibles en <strong>Restaurante y Minimarket Coreano Saranghae</strong>, nuestro socio comercial.<br><small>¡Visítalos y descubre nuestra colección en persona!</small>', 
@@ -61,6 +72,7 @@ const traducciones = {
         es: ' XAM Goth Apparel es una marca independiente. Nuestros productos están disponibles en este punto de venta gracias a nuestro socio comercial.', 
         en: ' XAM Goth Apparel is an independent brand. Our products are available at this location thanks to our business partner.' 
     },
+    'footer-rights': { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
 };
 
 // ==================================================
@@ -245,6 +257,9 @@ function renderizarProductos() {
             });
         });
     });
+
+    mostrarUltimosProductos();
+
 }
 
 // ==================================================
@@ -254,9 +269,21 @@ function cambiarIdioma(lang) {
     idiomaActual = lang;
     localStorage.setItem('xam-lang', lang);
     document.getElementById('current-lang').textContent = lang.toUpperCase();
+    
+    // Actualizar todos los textos estáticos
     aplicarIdioma();
-    renderizarProductos();
+    
+    // Actualizar últimas novedades (solo en index.html)
+    if (document.getElementById('new-products-grid')) {
+        mostrarUltimosProductos();
+    }
+    
+    // Actualizar catálogo (solo en products.html)
+    if (document.getElementById('product-grid')) {
+        renderizarProductos();
+    }
 }
+
 
 function aplicarIdioma() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -282,12 +309,14 @@ function cargarProductos() {
         .then(data => {
             productos = data;
             renderizarProductos();
+            mostrarUltimosProductos();
         })
         .catch(error => {
             console.error('Error cargando productos:', error);
             // Productos de respaldo en caso de error
             productos = [];
             renderizarProductos();
+            mostrarUltimosProductos();
         });
 }
 
@@ -299,6 +328,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const langGuardado = localStorage.getItem('xam-lang') || 'es';
     idiomaActual = langGuardado;
     document.getElementById('current-lang').textContent = langGuardado.toUpperCase();
+    // Cargar productos desde el JSON
+    cargarProductos();
+    
+    // Mostrar últimos productos DESPUÉS de cargar los productos
+    // Necesitas esperar a que se carguen
+    const observer = new MutationObserver(() => {
+        if (productos.length > 0) {
+            mostrarUltimosProductos();
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     // Eventos de filtros
     document.querySelectorAll('.filter-category').forEach(btn => {
@@ -328,3 +369,151 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar productos desde el JSON
     cargarProductos();
 });
+
+// ==================================================
+// 7. MOSTRAR ÚLTIMOS PRODUCTOS EN EL HOME
+// ==================================================
+function mostrarUltimosProductos() {
+    const grid = document.getElementById('new-products-grid');
+    if (!grid) return;
+
+    const lang = idiomaActual;
+
+    // Tomar los últimos 4 productos activos
+    const ultimos = productos
+        .filter(p => p.activo === true)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 4);
+
+    if (ultimos.length === 0) {
+        grid.innerHTML = `
+            <div class="col-12 text-center">
+                <p class="text-muted" data-i18n="new-empty">Pronto tendremos nuevos productos.</p>
+            </div>
+        `;
+        aplicarIdioma();
+        return;
+    }
+
+    // Generar HTML con el mismo estilo que el catálogo
+    const html = ultimos.map((p, index) => {
+        const carouselId = `new-carousel-${p.id}-${index}`;
+        const tieneMultiples = p.imagenes && p.imagenes.length > 1;
+        
+        // Generar imágenes
+        let imagenesHTML = '';
+        if (p.imagenes && p.imagenes.length > 0) {
+            p.imagenes.forEach((img, idx) => {
+                imagenesHTML += `
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                        <img src="${img}" class="d-block w-100" alt="${p.nombre[lang]}" 
+                             style="height: 280px; object-fit: cover; background: #0a0a0a;">
+                    </div>
+                `;
+            });
+        } else {
+            imagenesHTML = `
+                <div class="carousel-item active">
+                    <img src="assets/images/placeholder.jpg" class="d-block w-100" alt="Sin imagen" 
+                         style="height: 280px; object-fit: cover; background: #0a0a0a;">
+                </div>
+            `;
+        }
+
+        // Generar puntos indicadores
+        let puntosHTML = '';
+        if (tieneMultiples) {
+            p.imagenes.forEach((_, idx) => {
+                puntosHTML += `
+                    <button type="button" class="carousel-dot" 
+                            data-carousel-id="${carouselId}" 
+                            data-slide-to="${idx}" 
+                            style="width: 12px; height: 12px; border-radius: 50%; border: none; 
+                                   background: ${idx === 0 ? '#ffffff' : '#555555'}; 
+                                   margin: 0 4px; padding: 0; cursor: pointer; transition: background 0.3s;">
+                    </button>
+                `;
+            });
+        }
+
+        return `
+            <div class="col-md-3 col-6">
+                <div class="product-card h-100">
+                    <!-- CARRUSEL -->
+                    <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-inner">
+                            ${imagenesHTML}
+                        </div>
+                        
+                        <!-- Flechas -->
+                        ${tieneMultiples ? `
+                            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev" 
+                                    style="width: 20%; background: linear-gradient(to right, rgba(0,0,0,0.6), transparent); border: none;">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next" 
+                                    style="width: 20%; background: linear-gradient(to left, rgba(0,0,0,0.6), transparent); border: none;">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- Puntos indicadores -->
+                    ${tieneMultiples ? `
+                        <div class="d-flex justify-content-center gap-1 mt-2" id="${carouselId}-dots" style="position: relative; top: -10px;">
+                            ${puntosHTML}
+                        </div>
+                    ` : ''}
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${p.nombre[lang]}</h5>
+                        <p class="card-text flex-grow-1">${p.descripcion[lang]}</p>
+                        <p class="price">$${p.precio.toLocaleString('es-CO')}</p>
+                        <a href="https://www.instagram.com/direct/t/tucuenta" target="_blank" class="btn btn-buy">
+                            <i class="bi bi-instagram me-1"></i> 
+                            <span data-i18n="buy-btn">Comprar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    grid.innerHTML = html;
+    aplicarIdioma();
+
+    // Inicializar eventos de los carruseles
+    document.querySelectorAll('#new-products-grid .carousel').forEach(carousel => {
+        const carouselId = carousel.id;
+        
+        carousel.addEventListener('slid.bs.carousel', function(event) {
+            const newIndex = event.to;
+            const dotContainer = document.getElementById(`${carouselId}-dots`);
+            
+            if (dotContainer) {
+                const dots = dotContainer.querySelectorAll('.carousel-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === newIndex) {
+                        dot.style.background = '#ffffff';
+                    } else {
+                        dot.style.background = '#555555';
+                    }
+                });
+            }
+        });
+
+        const dots = document.querySelectorAll(`#${carouselId}-dots .carousel-dot`);
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideIndex = parseInt(this.dataset.slideTo);
+                const carouselEl = document.getElementById(carouselId);
+                const bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
+                if (bsCarousel) {
+                    bsCarousel.to(slideIndex);
+                }
+            });
+        });
+    });
+}

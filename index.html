@@ -104,24 +104,61 @@
         </div>
     </section>
 
-    <!-- ================= VALORES / SELLOS ================= -->
-    <section class="py-5 bg-secondary bg-opacity-10">
+    <!-- ================= ÚLTIMOS PRODUCTOS ================= -->
+    <section class="py-5 bg-dark text-white">
         <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md-4">
-                    <i class="bi bi-droplet fs-1 text-dark"></i>
-                    <h4 class="mt-3" data-i18n="value1-title">Hecho a mano</h4>
-                    <p data-i18n="value1-desc">Cada pieza es única y elaborada con atención al detalle.</p>
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="section-title" data-i18n="new-title">🌙 Últimos productos</h2>
+                    <p class="about-highlight" data-i18n="new-subtitle">Lo más nuevo que tenemos para ti</p>
                 </div>
-                <div class="col-md-4">
-                    <i class="bi bi-tree fs-1 text-dark"></i>
-                    <h4 class="mt-3" data-i18n="value2-title">Sostenible</h4>
-                    <p data-i18n="value2-desc">Materiales eco-amigables y producción responsable.</p>
+            </div>
+            <div class="row g-4" id="new-products-grid">
+                <!-- Los productos se cargarán con JavaScript -->
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="products.html" class="btn btn-outline-light" data-i18n="new-cta">Ver todos los productos →</a>
                 </div>
-                <div class="col-md-4">
-                    <i class="bi bi-heart fs-1 text-dark"></i>
-                    <h4 class="mt-3" data-i18n="value3-title">Comunidad</h4>
-                    <p data-i18n="value3-desc">Somos una tribu. Cada compra apoya el arte alternativo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ¿POR QUÉ XAM? ================= -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2 class="section-title" data-i18n="why-title">¿Por qué XAM?</h2>
+                    <p class="about-highlight" data-i18n="why-subtitle" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">Diferente por diseño. Auténtico por naturaleza.</p>
+                </div>
+            </div>
+            <div>
+                <img src="assets/images/chain-divider.webp" alt="Cadena decorativa" class="chain-divider">
+            </div>
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-md-4">
+                        <div class="why-card p-4 text-center">
+                            <span class="why-number">I</span>  <!-- ROMANO -->
+                            <h4 class="mt-3" data-i18n="why-point1-title">No se ve en cualquier calle</h4>
+                            <p data-i18n="why-point1-desc">En Villavicencio, somos los únicos. En Colombia, de los pocos. Porque hay estilos que no se ven en cualquier calle, y el nuestro es uno de ellos.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="why-card p-4 text-center">
+                            <span class="why-number">II</span> <!-- ROMANO -->
+                            <h4 class="mt-3" data-i18n="why-point2-title">Comunidad antes que ventas</h4>
+                            <p data-i18n="why-point2-desc">No queremos que nos compres una vez y te olvides. Queremos que entres, te quedes, y sientas que esto también es tuyo.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="why-card p-4 text-center">
+                            <span class="why-number">III</span> <!-- ROMANO -->
+                            <h4 class="mt-3" data-i18n="why-point3-title">Estilo que cruza océanos</h4>
+                            <p data-i18n="why-point3-desc">Cruzamos un océano para que no tengas que hacerlo tú. El estilo ya está aquí, solo falta que lo uses. Y cuando lo hagas, vas a entender por qué valió la pena.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,7 +172,7 @@
             <!-- Título y descripción -->
             <div class="row mb-4">
                 <div class="col-12 text-center">
-                    <h2 class="section-title" data-i18n="map-title">📍 Encuentra nuestros productos</h2>
+                    <h2 class="section-title" data-i18n="map-title">🕯️ Nuestra casa. Tu próxima parada.</h2>
                     <p class="text-muted mt-3" data-i18n="map-subtitle">
                         Actualmente nuestros productos están disponibles en <strong>Restaurante y Minimarket Coreano Saranghae</strong>, nuestro socio comercial.<br>
                         <small>¡Visítalos y descubre nuestra colección en persona!</small>
@@ -202,7 +239,7 @@
         <footer class="py-4">
             <div class="container text-center">
                 <p class="mb-2" style="color: #000000 !important;">
-                    &copy; 2026 XAM GOTH APPAREL. <span data-i18n="footer-rights">Todos los derechos reservados.</span>
+                    &copy; 2026 XAM GOTH APPAREL | <span data-i18n="footer-rights">Todos los derechos reservados.</span>
                 </p>
                 <div class="social-icons d-flex justify-content-center gap-4">
                     <a href="https://www.tiktok.com/@xam.goth.apparel" target="_blank" class="fs-3" style="color: #000000 !important;">

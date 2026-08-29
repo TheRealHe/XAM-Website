@@ -388,6 +388,60 @@ footer .social-icons a:hover {
     letter-spacing: 1px;
 }
 
+.chain-divider {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    display: block;
+    margin-top: 1rem;
+    object-fit: cover;
+}
+
+/* ==========================================
+   NÚMEROS ROMANOS - ESTILO ELEGANTE
+   ========================================== */
+.why-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #2a2a2a;
+    text-align: center;
+    position: relative;  /* <--- NECESARIO para el ::after */
+    transition: border-color 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Línea decorativa dentro del círculo (centrada) */
+.why-number::after {
+    content: '';
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 1.5px;
+    background: #333;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.why-card:hover .why-number {
+    border-color: #ffffff;
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+.why-card:hover .why-number::after {
+    width: 40px;
+    background: #ffffff;
+}
+
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .map-container iframe {
