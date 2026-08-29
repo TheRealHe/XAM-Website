@@ -57,7 +57,7 @@ const traducciones = {
     'why-point2-desc': { es: 'No queremos que nos compres una vez y te olvides. Queremos que entres, te quedes, y sientas que esto también es tuyo.', en: 'We don\'t want you to buy once and forget us. We want you to walk in, stay, and feel that this is yours too.' },
     'why-point3-title': { es: 'Estilo que cruza océanos', en: 'Style that crosses oceans' },
     'why-point3-desc': { es: 'Cruzamos un océano para que no tengas que hacerlo tú. El estilo ya está aquí, solo falta que lo uses. Y cuando lo hagas, vas a entender por qué valió la pena.', en: 'We crossed an ocean so you don\'t have to. The style is already here, you just need to wear it. And when you do, you\'ll understand why it was worth it.' },
-    'map-title': { es: '📍 Encuentra nuestros productos', en: '📍 Find our products' },
+    'map-title': { es: '🕯️ Nuestra casa, Tu próxima parada', en: '🕯️ Our home, Your next stop' },
     'map-subtitle': { 
         es: 'Actualmente nuestros productos están disponibles en <strong>Restaurante y Minimarket Coreano Saranghae</strong>, nuestro socio comercial.<br><small>¡Visítalos y descubre nuestra colección en persona!</small>', 
         en: 'Our products are currently available at <strong>Saranghae Korean Restaurant & Minimarket</strong>, our business partner.<br><small>Visit them and discover our collection in person!</small>' 
