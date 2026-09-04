@@ -1,8 +1,20 @@
 // ==================================================
 // 1. SISTEMA DE IDIOMAS
 // ==================================================
+
 let idiomaActual = 'es';
-let productos = [];  // Ahora se llenará desde el JSON
+let productos = [];
+
+// ===== FUNCIÓN GLOBAL PARA LIMPIAR RUTAS DE IMÁGENES =====
+function limpiarRutaImagen(ruta) {
+    if (!ruta || typeof ruta !== 'string') return '';
+    if (ruta.startsWith('/')) {
+        return ruta.substring(1);
+    }
+    return ruta;
+}
+
+// ==================================================
 
 const traducciones = {
     'nav-home': { es: 'Inicio', en: 'Home' },
@@ -140,16 +152,7 @@ function renderizarProductos() {
         const carouselId = `carousel-${p.id}-${index}`;
         const tieneMultiples = p.imagenes && p.imagenes.length > 1;
         
-        // ===== FUNCIÓN PARA LIMPIAR LA RUTA DE LA IMAGEN =====
-        function limpiarRutaImagen(ruta) {
-            if (!ruta || typeof ruta !== 'string') return '';
-            // Si empieza con '/', la eliminamos
-            if (ruta.startsWith('/')) {
-                return ruta.substring(1);
-            }
-            return ruta;
-        }
-        // ======================================================
+        limpiarRutaImagen()
         
         // Generar imágenes
         let imagenesHTML = '';
@@ -158,7 +161,7 @@ function renderizarProductos() {
                 // Limpiar la ruta de la imagen
                 const imgSrc = limpiarRutaImagen(img);
                 imagenesHTML += `
-                    <div class="carousel-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(p.imagenes, ${idx})">
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}" data-imagenes='${JSON.stringify(p.imagenes)}' data-index="${idx}">
                         <img src="${imgSrc}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
                             style="height: 280px; object-fit: cover; background: #0a0a0a; cursor: pointer;">
                     </div>
@@ -221,7 +224,7 @@ function renderizarProductos() {
                     ` : ''}
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title" style="cursor: pointer;" onclick="openLightbox(p.imagenes, 0)">${p.nombre[idiomaActual]}</h5>
+                        <h5 class="card-title" style="cursor: pointer;" data-imagenes='${JSON.stringify(p.imagenes)}' data-index="0">${p.nombre[idiomaActual]}</h5>
                         <p class="card-text flex-grow-1">${p.descripcion[idiomaActual]}</p>
                         <p class="price">$${p.precio.toLocaleString('es-CO')}</p>
                         <a href="https://www.instagram.com/direct/t/tucuenta" target="_blank" class="btn btn-buy">
@@ -235,6 +238,16 @@ function renderizarProductos() {
     }).join('');
 
     grid.innerHTML = html;
+
+    // ===== EVENTOS PARA EL LIGHTBOX =====
+    document.querySelectorAll('[data-imagenes]').forEach(el => {
+        el.addEventListener('click', function() {
+            const images = JSON.parse(this.dataset.imagenes);
+            const index = parseInt(this.dataset.index) || 0;
+            openLightbox(images, index);
+        });
+    });
+
     aplicarIdioma();
 
     // Inicializar eventos de los carruseles
@@ -340,11 +353,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const langGuardado = localStorage.getItem('xam-lang') || 'es';
     idiomaActual = langGuardado;
     document.getElementById('current-lang').textContent = langGuardado.toUpperCase();
+    
     // Cargar productos desde el JSON
     cargarProductos();
     
     // Mostrar últimos productos DESPUÉS de cargar los productos
-    // Necesitas esperar a que se carguen
     const observer = new MutationObserver(() => {
         if (productos.length > 0) {
             mostrarUltimosProductos();
@@ -380,6 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar productos desde el JSON
     cargarProductos();
+
+    // ===== INICIALIZAR LIGHTBOX =====
+    initLightbox();
+    // ================================
 });
 
 // ==================================================
@@ -391,7 +408,6 @@ function mostrarUltimosProductos() {
 
     const lang = idiomaActual;
 
-    // Tomar los últimos 4 productos activos
     const ultimos = productos
         .filter(p => p.activo === true)
         .sort((a, b) => b.id - a.id)
@@ -407,19 +423,19 @@ function mostrarUltimosProductos() {
         return;
     }
 
-    // Generar HTML con el mismo estilo que el catálogo
     const html = ultimos.map((p, index) => {
         const carouselId = `new-carousel-${p.id}-${index}`;
         const tieneMultiples = p.imagenes && p.imagenes.length > 1;
         
-        // Generar imágenes
         let imagenesHTML = '';
         if (p.imagenes && p.imagenes.length > 0) {
             p.imagenes.forEach((img, idx) => {
+                // Limpiar ruta de la imagen
+                const imgSrc = limpiarRutaImagen(img);
                 imagenesHTML += `
-                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                        <img src="${img}" class="d-block w-100" alt="${p.nombre[lang]}" 
-                             style="height: 280px; object-fit: cover; background: #0a0a0a;">
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}" data-imagenes='${JSON.stringify(p.imagenes)}' data-index="${idx}">
+                        <img src="${imgSrc}" class="d-block w-100" alt="${p.nombre[lang]}" 
+                             style="height: 280px; object-fit: cover; background: #0a0a0a; cursor: pointer;">
                     </div>
                 `;
             });
@@ -432,7 +448,6 @@ function mostrarUltimosProductos() {
             `;
         }
 
-        // Generar puntos indicadores
         let puntosHTML = '';
         if (tieneMultiples) {
             p.imagenes.forEach((_, idx) => {
@@ -451,13 +466,10 @@ function mostrarUltimosProductos() {
         return `
             <div class="col-md-3 col-6">
                 <div class="product-card h-100">
-                    <!-- CARRUSEL -->
                     <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
                         <div class="carousel-inner" style="cursor: pointer;">
                             ${imagenesHTML}
                         </div>
-                        
-                        <!-- Flechas -->
                         ${tieneMultiples ? `
                             <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev" 
                                     style="width: 20%; background: linear-gradient(to right, rgba(0,0,0,0.6), transparent); border: none;">
@@ -471,16 +483,13 @@ function mostrarUltimosProductos() {
                             </button>
                         ` : ''}
                     </div>
-                    
-                    <!-- Puntos indicadores -->
                     ${tieneMultiples ? `
                         <div class="d-flex justify-content-center gap-1 mt-2" id="${carouselId}-dots" style="position: relative; top: -10px;">
                             ${puntosHTML}
                         </div>
                     ` : ''}
-
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">${p.nombre[lang]}</h5>
+                        <h5 class="card-title" style="cursor: pointer;" data-imagenes='${JSON.stringify(p.imagenes)}' data-index="0">${p.nombre[lang]}</h5>
                         <p class="card-text flex-grow-1">${p.descripcion[lang]}</p>
                         <p class="price">$${p.precio.toLocaleString('es-CO')}</p>
                         <a href="https://www.instagram.com/direct/t/tucuenta" target="_blank" class="btn btn-buy">
@@ -494,6 +503,16 @@ function mostrarUltimosProductos() {
     }).join('');
 
     grid.innerHTML = html;
+
+    // ===== EVENTOS PARA EL LIGHTBOX (EN HOME) =====
+    document.querySelectorAll('#new-products-grid [data-imagenes]').forEach(el => {
+        el.addEventListener('click', function() {
+            const images = JSON.parse(this.dataset.imagenes);
+            const index = parseInt(this.dataset.index) || 0;
+            openLightbox(images, index);
+        });
+    });
+
     aplicarIdioma();
 
     // Inicializar eventos de los carruseles
@@ -530,6 +549,7 @@ function mostrarUltimosProductos() {
     });
 }
 
+
 // ==================================================
 // 8. ANIMACIÓN DEL HERO AL CARGAR LA PÁGINA
 // ==================================================
@@ -559,42 +579,80 @@ function animarHero() {
 
 // Ejecutar cuando la página esté completamente cargada
 document.addEventListener('DOMContentLoaded', function() {
-    // Esperar 1 segundos antes de iniciar la animación
+    // Esperar 0.3 segundos antes de iniciar la animación
     setTimeout(animarHero, 300);
 });
 
 // ==================================================
-// 9. LIGHTBOX + CARRUSEL
+// 9. LIGHTBOX + CARRUSEL (INICIALIZADO CUANDO EL DOM ESTÉ LISTO)
 // ==================================================
 let currentImages = [];
 let currentIndex = 0;
+let lightbox, lightboxImg, lightboxCounter, lightboxClose, lightboxPrev, lightboxNext;
 
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxCounter = document.getElementById('lightbox-counter');
-const lightboxClose = document.getElementById('lightbox-close');
-const lightboxPrev = document.getElementById('lightbox-prev');
-const lightboxNext = document.getElementById('lightbox-next');
+function initLightbox() {
+    lightbox = document.getElementById('lightbox');
+    lightboxImg = document.getElementById('lightbox-img');
+    lightboxCounter = document.getElementById('lightbox-counter');
+    lightboxClose = document.getElementById('lightbox-close');
+    lightboxPrev = document.getElementById('lightbox-prev');
+    lightboxNext = document.getElementById('lightbox-next');
+
+    if (!lightbox || !lightboxImg) {
+        console.warn('Lightbox elements not found');
+        return;
+    }
+
+    // Eventos
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', prevImage);
+    lightboxNext.addEventListener('click', nextImage);
+
+    // Cerrar al hacer clic fuera de la imagen (en el fondo)
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+    });
+}
 
 // Función para abrir el lightbox
 function openLightbox(images, index) {
+    if (!lightboxImg) {
+        console.warn('Lightbox not initialized');
+        return;
+    }
     currentImages = images;
     currentIndex = index;
     updateLightbox();
     lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
+    document.body.style.overflow = 'hidden';
 }
+
+// Exponer la función globalmente
+window.openLightbox = openLightbox;
 
 // Actualizar imagen y contador
 function updateLightbox() {
+    if (!lightboxImg) return;
     if (currentImages.length > 0) {
         lightboxImg.src = currentImages[currentIndex];
-        lightboxCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+        if (lightboxCounter) {
+            lightboxCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+        }
     }
 }
 
 // Cerrar lightbox
 function closeLightbox() {
+    if (!lightbox) return;
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
 }
@@ -613,22 +671,3 @@ function nextImage() {
         updateLightbox();
     }
 }
-
-// Eventos
-lightboxClose.addEventListener('click', closeLightbox);
-lightboxPrev.addEventListener('click', prevImage);
-lightboxNext.addEventListener('click', nextImage);
-
-// Cerrar al hacer clic fuera de la imagen (en el fondo)
-lightbox.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLightbox();
-    }
-});
-
-// Cerrar con tecla ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'ArrowRight') nextImage();
-});
