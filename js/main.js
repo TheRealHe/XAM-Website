@@ -15,6 +15,46 @@ function limpiarRutaImagen(ruta) {
 }
 
 // ==================================================
+// OBTENER URL BASE DEL SITIO
+// ==================================================
+function getBaseUrl() {
+    const path = window.location.pathname;
+    const repoName = path.split('/')[1] || '';
+    if (repoName && path.includes(repoName)) {
+        return `/${repoName}`;
+    }
+    return '';
+}
+
+const BASE_URL = getBaseUrl();
+
+// ==================================================
+// FUNCIÓN PARA CORREGIR RUTAS DE IMÁGENES
+// ==================================================
+function corregirRutaImagen(ruta) {
+    if (!ruta || typeof ruta !== 'string') return '';
+    
+    // Si la ruta ya es absoluta (con http), devolverla tal cual
+    if (ruta.startsWith('http://') || ruta.startsWith('https://')) {
+        return ruta;
+    }
+    
+    // Eliminar barra al inicio
+    if (ruta.startsWith('/')) {
+        ruta = ruta.substring(1);
+    }
+    
+    // Si la ruta comienza con 'assets/' y hay un repositorio, agregar la base
+    if (ruta.startsWith('assets/')) {
+        if (BASE_URL) {
+            return `${BASE_URL}/${ruta}`;
+        }
+    }
+    
+    return ruta;
+}
+
+// ==================================================
 
 const traducciones = {
     'nav-home': { es: 'Inicio', en: 'Home' },
