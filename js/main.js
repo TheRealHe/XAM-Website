@@ -677,7 +677,8 @@ function openLightbox(images, index) {
         console.warn('Lightbox not initialized');
         return;
     }
-    currentImages = images;
+    // Corregir cada ruta de imagen
+    currentImages = images.map(img => corregirRutaImagen(img));
     currentIndex = index;
     updateLightbox();
     lightbox.classList.add('active');
