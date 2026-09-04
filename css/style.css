@@ -117,7 +117,7 @@ body {
 .hero-section {
     min-height: 80vh;
     background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), 
-                url('assets/images/hero-bg.webp') 50% 95%/cover no-repeat;
+                url('../assets/images/hero-bg.webp') 50% 95%/cover no-repeat;
     background-attachment: fixed;
     display: flex;
     align-items: center;
