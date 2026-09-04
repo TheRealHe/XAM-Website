@@ -7,8 +7,8 @@ let productos = [];  // Ahora se llenará desde el JSON
 const traducciones = {
     'nav-home': { es: 'Inicio', en: 'Home' },
     'nav-products': { es: 'Productos', en: 'Products' },
-    'hero-title': { es: 'XAM GOTH', en: 'XAM GOTH' },
-    'hero-subtitle': { es: 'Moda alternativa para almas oscuras', en: 'Alternative fashion for dark souls' },
+    'hero-title': { es: 'XAM', en: 'XAM' },
+    'hero-subtitle': { es: 'Para los que viven fuera del molde', en: 'For those who break the mold' },
     'hero-cta': { es: 'Explorar colección', en: 'Explore collection' },
     'about-title': { es: 'Sobre XAM', en: 'About XAM' },
     'about-highlight-1': { es: 'Nacimos lejos.', en: 'We were born far away.' },
@@ -67,12 +67,24 @@ const traducciones = {
     'map-address': { es: 'Dirección', en: 'Address' },
     'map-address-text': { es: 'Cra. 44 A N 18 70 Sur, Villavicencio', en: 'Cra. 44 A N 18 70 Sur, Villavicencio' },
     'map-hours': { es: 'Horario de atención', en: 'Business hours' },
-    'map-hours-text': { es: 'Dom - Vie: 1:00 PM - 9:00 PM', en: 'Sun - Fry: 1:00 PM - 9:00 PM' },
+    'map-hours-text': { es: 'Dom - Jue: 1:00 PM - 9:00 PM', en: 'Sun - Thu: 1:00 PM - 9:00 PM' },
     'map-note': { 
         es: ' XAM Goth Apparel es una marca independiente. Nuestros productos están disponibles en este punto de venta gracias a nuestro socio comercial.', 
         en: ' XAM Goth Apparel is an independent brand. Our products are available at this location thanks to our business partner.' 
     },
+    'shipping-title': { es: 'de nuestro armario al tuyo', en: 'From our closet to yours' },
+    'shipping-text1': { 
+        es: 'Sabemos lo que es querer algo y no poder tenerlo porque está lejos. Por eso decidimos que ningún rincón de Colombia se quede sin XAM.', 
+        en: 'We know what it\'s like to want something and not be able to have it because it\'s far away. That\'s why we decided that no corner of Colombia should be without XAM.' 
+    },
+    'shipping-text2': { 
+        es: 'Hacemos envíos a todo el país con mensajería certificada. Tiempo estimado: <strong>3 a 7 días hábiles</strong>. El costo se calcula según tu ubicación.', 
+        en: 'We ship nationwide with certified courier. Estimated time: <strong>3 to 7 business days</strong>. The cost is calculated based on your location.' 
+    },
+    'shipping-cta': { es: 'Donde sea que estés, XAM te espera.', en: 'Wherever you are, XAM awaits you.' },
     'footer-rights': { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
+    'surprise': {es : 'Sorprendeme', en: 'Surprise me'},
+
 };
 
 // ==================================================
@@ -146,9 +158,9 @@ function renderizarProductos() {
                 // Limpiar la ruta de la imagen
                 const imgSrc = limpiarRutaImagen(img);
                 imagenesHTML += `
-                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}" onclick="openLightbox(p.imagenes, ${idx})">
                         <img src="${imgSrc}" class="d-block w-100" alt="${p.nombre[idiomaActual]}" 
-                             style="height: 280px; object-fit: cover;">
+                            style="height: 280px; object-fit: cover; background: #0a0a0a; cursor: pointer;">
                     </div>
                 `;
             });
@@ -182,7 +194,7 @@ function renderizarProductos() {
                 <div class="product-card h-100">
                     <!-- CARRUSEL -->
                     <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner" style="cursor: pointer;">
                             ${imagenesHTML}
                         </div>
                         
@@ -209,7 +221,7 @@ function renderizarProductos() {
                     ` : ''}
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">${p.nombre[idiomaActual]}</h5>
+                        <h5 class="card-title" style="cursor: pointer;" onclick="openLightbox(p.imagenes, 0)">${p.nombre[idiomaActual]}</h5>
                         <p class="card-text flex-grow-1">${p.descripcion[idiomaActual]}</p>
                         <p class="price">$${p.precio.toLocaleString('es-CO')}</p>
                         <a href="https://www.instagram.com/direct/t/tucuenta" target="_blank" class="btn btn-buy">
@@ -441,7 +453,7 @@ function mostrarUltimosProductos() {
                 <div class="product-card h-100">
                     <!-- CARRUSEL -->
                     <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner" style="cursor: pointer;">
                             ${imagenesHTML}
                         </div>
                         
@@ -517,3 +529,106 @@ function mostrarUltimosProductos() {
         });
     });
 }
+
+// ==================================================
+// 8. ANIMACIÓN DEL HERO AL CARGAR LA PÁGINA
+// ==================================================
+function animarHero() {
+    const titulo = document.querySelector('.hero-title');
+    const subtitulo = document.querySelector('.hero-subtitle');
+    const boton = document.querySelector('.hero-btn');
+
+    if (titulo) {
+        setTimeout(() => {
+            titulo.classList.add('visible');
+        }, 500); // 0.5 segundos
+    }
+
+    if (subtitulo) {
+        setTimeout(() => {
+            subtitulo.classList.add('visible');
+        }, 500); // 0.5 segundos
+    }
+
+    if (boton) {
+        setTimeout(() => {
+            boton.classList.add('visible');
+        }, 500); // 0.5 segundos
+    }
+}
+
+// Ejecutar cuando la página esté completamente cargada
+document.addEventListener('DOMContentLoaded', function() {
+    // Esperar 1 segundos antes de iniciar la animación
+    setTimeout(animarHero, 300);
+});
+
+// ==================================================
+// 9. LIGHTBOX + CARRUSEL
+// ==================================================
+let currentImages = [];
+let currentIndex = 0;
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCounter = document.getElementById('lightbox-counter');
+const lightboxClose = document.getElementById('lightbox-close');
+const lightboxPrev = document.getElementById('lightbox-prev');
+const lightboxNext = document.getElementById('lightbox-next');
+
+// Función para abrir el lightbox
+function openLightbox(images, index) {
+    currentImages = images;
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
+}
+
+// Actualizar imagen y contador
+function updateLightbox() {
+    if (currentImages.length > 0) {
+        lightboxImg.src = currentImages[currentIndex];
+        lightboxCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+    }
+}
+
+// Cerrar lightbox
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Navegación
+function prevImage() {
+    if (currentImages.length > 0) {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        updateLightbox();
+    }
+}
+
+function nextImage() {
+    if (currentImages.length > 0) {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        updateLightbox();
+    }
+}
+
+// Eventos
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', prevImage);
+lightboxNext.addEventListener('click', nextImage);
+
+// Cerrar al hacer clic fuera de la imagen (en el fondo)
+lightbox.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeLightbox();
+    }
+});
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+});

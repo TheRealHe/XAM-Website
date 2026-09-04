@@ -76,8 +76,8 @@
     <section class="hero-section d-flex align-items-center">
         <div class="container text-center text-white">
             <h1 class="display-1 fw-bold hero-title" data-i18n="hero-title">XAM GOTH</h1>
-            <p class="lead hero-subtitle" data-i18n="hero-subtitle">Moda alternativa para almas oscuras</p>
-            <a href="products.html" class="btn btn-outline-light btn-lg mt-4" data-i18n="hero-cta">Explorar colección</a>
+            <p class="lead hero-subtitle" data-i18n="hero-subtitle">Para los que viven fuera del molde.</p>
+            <a href="products.html" class="btn btn-outline-light btn-lg mt-4 hero-btn" data-i18n="hero-cta">Explorar colección</a>
         </div>
     </section>
 
@@ -233,9 +233,40 @@
     </section>
 
     <!-- ============================================ -->
+    <!-- ENVÍOS A TODA COLOMBIA                       -->
+    <!-- ============================================ -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row align-items-center g-5">
+
+                <!-- COLUMNA IZQUIERDA: IMAGEN -->
+                <div class="col-lg-6 text-center">
+                    <img src="assets/images/shipping-colombia.webp" alt="Envíos a toda Colombia" class="img-fluid rounded-4 shadow-lg" style="max-height: 350px; width: 100%; object-fit: cover;">
+                </div>
+
+                <!-- COLUMNA DERECHA: TEXTO -->
+                <div class="col-lg-6">
+                    <h2 class="section-title" data-i18n="shipping-title">de nuestro armario al tuyo</h2>
+                    <p class="lead mt-3" data-i18n="shipping-text1" style="font-weight: 300; line-height: 1.8;">Sabemos lo que es querer algo y no poder tenerlo porque está lejos. Por eso decidimos que ningún rincón de Colombia se quede sin XAM.</p>
+                    <p data-i18n="shipping-text2" style="color: #aaaaaa; line-height: 1.8;">Hacemos envíos a todo el país con mensajería certificada. Tiempo estimado: <strong style="color: #ffffff;">3 a 7 días hábiles</strong>. El costo se calcula según tu ubicación.</p>
+                    <p class="about-highlight mt-3" data-i18n="shipping-cta" style="font-style: italic; font-weight: 300; color: #cccccc;">Donde sea que estés, XAM te espera.</p>
+                    <a href="products.html" class="btn btn-outline-light" data-i18n="surprise">sorprendeme</a>
+                </div>
+
+            </div>
+
+            <br></br>
+
+        </div>
+    </section>
+
+    
+    
+    <!-- ============================================ -->
     <!-- DIV BLANCO que envuelve el PIE DE PÁGINA     -->
     <!-- ============================================ -->
-    <div class="footer-wrapper" style="background-color: #ffffff; width: 100%; border-top: 2px solid #cccccc; margin-top: auto;">
+    <div class="footer-wrapper">
+        
         <footer class="py-4">
             <div class="container text-center">
                 <p class="mb-2" style="color: #000000 !important;">
@@ -260,5 +291,17 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- LIGHTBOX / MODAL -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">✕</button>
+        <div class="lightbox-content">
+            <button class="lightbox-prev" id="lightbox-prev">‹</button>
+            <img id="lightbox-img" src="" alt="XAM Product">
+            <button class="lightbox-next" id="lightbox-next">›</button>
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 3</div>
+    </div>
+
 </body>
 </html>
