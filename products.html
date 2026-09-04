@@ -67,71 +67,86 @@
         </nav>
     </div>
 
-    <!-- ===== FIN DEL DIV BLANCO DEL ENCABEZADO ===== -->
-
     <!-- ================= CATÁLOGO ================= -->
+
     <section class="py-5">
         <div class="container">
-            <h1 class="section-title text-center mb-5" data-i18n="catalog-title">Nuestros Productos</h1>
-            
-<div class="container mb-5">
-    
-    <div class="row g-3">
-        <!-- Columna 1: Acordeón de categorías -->
-        <div class="col-md-6">
-            <div class="accordion" id="categoryAccordion">
-                <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
-                            <i class="bi bi-tags me-2"></i> <span data-i18n="filter-by-category">Filtrar por categoría</span>
-                        </button>
-                    </h2>
-                    <div id="categoryCollapse" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
-                        <div class="accordion-body" style="background: #0a0a0a;">
-                            <div class="d-flex flex-wrap gap-2">
-                                <button class="btn btn-outline-light filter-category active" data-category="all" data-i18n="filter-all">Todos</button>
-                                <button class="btn btn-outline-light filter-category" data-category="accesorios" data-i18n="filter-accessories">Accesorios</button>
-                                <button class="btn btn-outline-light filter-category" data-category="camisas" data-i18n="filter-shirts">Camisas</button>
-                                <button class="btn btn-outline-light filter-category" data-category="faldas" data-i18n="filter-skirts">Faldas</button>
-                                <button class="btn btn-outline-light filter-category" data-category="maletas" data-i18n="filter-bags">Maletas</button>
-                                <button class="btn btn-outline-light filter-category" data-category="pantalones" data-i18n="filter-pants">Pantalones</button>
-                                <button class="btn btn-outline-light filter-category" data-category="peluches" data-i18n="filter-plushies">Peluches</button>
-                                <button class="btn btn-outline-light filter-category" data-category="zapatos" data-i18n="filter-shoes">Zapatos</button>
+            <!-- Título y carrito -->
+            <div class="row align-items-center mb-4">
+                <div class="col-md-6">
+                    <h1 class="section-title text-start mb-0" data-i18n="catalog-title">Nuestros Productos</h1>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="cart.html" class="btn btn-outline-light position-relative px-4 py-2">
+                        <i class="bi bi-cart3 fs-4"></i>
+                        <span class="cart-count-badge" style="position: absolute; top: -8px; right: -8px; background: #000; color: #fff; border-radius: 50%; padding: 2px 8px; font-size: 0.7rem; display: none;">0</span>
+                        <span class="ms-2 d-none d-md-inline" data-i18n="cart-title-p">Carrito</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FILTROS -->
+            <div class="row g-3 mb-5">
+                <!-- Columna 1: Acordeón de categorías -->
+                <div class="col-md-6">
+                    <div class="accordion" id="categoryAccordion">
+                        <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
+                                    <i class="bi bi-tags me-2"></i> <span data-i18n="filter-by-category">Filtrar por categoría</span>
+                                </button>
+                            </h2>
+                            <div id="categoryCollapse" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                                <div class="accordion-body" style="background: #0a0a0a;">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button class="btn btn-outline-light filter-category active" data-category="all" data-i18n="filter-all">Todos</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="accesorios" data-i18n="filter-accessories">Accesorios</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="camisas" data-i18n="filter-shirts">Camisas</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="faldas" data-i18n="filter-skirts">Faldas</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="maletas" data-i18n="filter-bags">Maletas</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="pantalones" data-i18n="filter-pants">Pantalones</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="peluches" data-i18n="filter-plushies">Peluches</button>
+                                        <button class="btn btn-outline-light filter-category" data-category="zapatos" data-i18n="filter-shoes">Zapatos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Acordeón de precios -->
+                <div class="col-md-6">
+                    <div class="accordion" id="priceAccordion">
+                        <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
+                                    <i class="bi bi-currency-dollar me-2"></i> <span data-i18n="filter-by-price">Filtrar por precio</span>
+                                </button>
+                            </h2>
+                            <div id="priceCollapse" class="accordion-collapse collapse" data-bs-parent="#priceAccordion">
+                                <div class="accordion-body" style="background: #0a0a0a;">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button class="btn btn-outline-light filter-price active" data-price="all" data-i18n="price-all">Todos</button>
+                                        <button class="btn btn-outline-light filter-price" data-price="menos-20" data-i18n="price-less-20">Menos de $20.000</button>
+                                        <button class="btn btn-outline-light filter-price" data-price="20-50" data-i18n="price-20-50">$20.000 - $50.000</button>
+                                        <button class="btn btn-outline-light filter-price" data-price="50-100" data-i18n="price-50-100">$50.000 - $100.000</button>
+                                        <button class="btn btn-outline-light filter-price" data-price="mas-100" data-i18n="price-more-100">Más de $100.000</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    <div class="col-md-6">
-        <div class="accordion" id="priceAccordion">
-            <div class="accordion-item" style="background: #1a1a1a; border: 1px solid #333;">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#priceCollapse" style="background: #1a1a1a; color: #ffffff; border: none;">
-                        <i class="bi bi-currency-dollar me-2"></i> <span data-i18n="filter-by-price">Filtrar por precio</span>
-                    </button>
-                </h2>
-                <div id="priceCollapse" class="accordion-collapse collapse" data-bs-parent="#priceAccordion">
-                    <div class="accordion-body" style="background: #0a0a0a;">
-                        <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-outline-light filter-price active" data-price="all" data-i18n="price-all">Todos</button>
-                            <button class="btn btn-outline-light filter-price" data-price="menos-20" data-i18n="price-less-20">Menos de $20.000</button>
-                            <button class="btn btn-outline-light filter-price" data-price="20-50" data-i18n="price-20-50">$20.000 - $50.000</button>
-                            <button class="btn btn-outline-light filter-price" data-price="50-100" data-i18n="price-50-100">$50.000 - $100.000</button>
-                            <button class="btn btn-outline-light filter-price" data-price="mas-100" data-i18n="price-more-100">Más de $100.000</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-            <!-- Grid de productos -->
+            <!-- GRID DE PRODUCTOS -->
             <div class="row g-4" id="product-grid">
                 <!-- Los productos se generarán dinámicamente con JavaScript -->
             </div>
         </div>
+
+        <br></br>
+
     </section>
 
     <!-- ============================================ -->
@@ -160,7 +175,8 @@
     <!-- ===== FIN DEL DIV BLANCO DEL PIE DE PÁGINA ===== -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js"></script>  <!-- Primero main.js (carga productos) -->
+    <script src="js/cart.js"></script>   <!-- Después cart.js (depende de productos) -->
 
     <!-- LIGHTBOX / MODAL -->
     <div class="lightbox-overlay" id="lightbox">

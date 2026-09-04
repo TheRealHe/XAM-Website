@@ -99,7 +99,15 @@ const traducciones = {
     'price-20-50': { es: '$20.000 - $50.000', en: '$20.000 - $50.000' },
     'price-50-100': { es: '$50.000 - $100.000', en: '$50.000 - $100.000' },
     'price-more-100': { es: 'Más de $100.000', en: 'More than $100.000' },
-    'buy-btn': { es: 'Comprar', en: 'Buy' },
+    'buy-btn': {es: 'Comprar', en: 'Buy'},
+    'add-to-cart': { es: 'Agregar al carrito', en: 'Add to cart' },
+    'cart-title': { es: '✦ Tu selección', en: '✦ Your selection' },
+    'cart-title-p': { es: 'Carrito', en: 'Cart' },
+    'cart-empty': { es: 'Tu carrito está vacío.', en: 'Your cart is empty.' },
+    'cart-total': { es: 'Total', en: 'Total' },
+    'cart-checkout': { es: 'Comprar por WhatsApp', en: 'Buy via WhatsApp' },
+    'cart-clear': { es: 'Vaciar carrito', en: 'Clear cart' },
+    'cart-continue': { es: 'Seguir comprando', en: 'Continue shopping' },
     'no-products': { es: 'No hay productos disponibles en esta categoría.', en: 'No products available in this category.' },
     'why-title': { es: '¿Por qué XAM?', en: 'Why XAM?' },
     'why-subtitle': { es: 'Diferente por diseño. Auténtico por naturaleza.', en: 'Different by design. Authentic by nature.' },
@@ -267,10 +275,10 @@ function renderizarProductos() {
                         <h5 class="card-title" style="cursor: pointer;" data-imagenes='${JSON.stringify(p.imagenes)}' data-index="0">${p.nombre[idiomaActual]}</h5>
                         <p class="card-text flex-grow-1">${p.descripcion[idiomaActual]}</p>
                         <p class="price">$${p.precio.toLocaleString('es-CO')}</p>
-                        <a href="https://www.instagram.com/direct/t/tucuenta" target="_blank" class="btn btn-buy">
-                            <i class="bi bi-instagram me-1"></i> 
-                            <span data-i18n="buy-btn">Comprar</span>
-                        </a>
+                        <button onclick="addToCart(${p.id})" class="btn btn-buy">
+                            <i class="bi bi-cart-plus me-1"></i> 
+                            <span data-i18n="add-to-cart">Agregar al carrito</span>
+                        </button>
                     </div>
                 </div>
             </div>
