@@ -111,6 +111,7 @@ function updateCartCount() {
 // ==================================================
 // RENDERIZAR CARRITO EN CART.HTML
 // ==================================================
+
 function renderCart() {
     console.log('renderCart() ejecutado');
     
@@ -138,7 +139,6 @@ function renderCart() {
     if (emptyMessage) emptyMessage.style.display = 'none';
     if (itemsContainer) itemsContainer.style.display = 'block';
     
-    // Usar el idioma actual (global)
     const lang = typeof idiomaActual !== 'undefined' ? idiomaActual : 'es';
     console.log('Idioma actual:', lang);
     
@@ -149,7 +149,6 @@ function renderCart() {
         const subtotal = item.precio * item.quantity;
         total += subtotal;
         
-        // Obtener el nombre en el idioma actual
         let nombre = 'Producto';
         if (item.nombre) {
             if (typeof item.nombre === 'object') {
@@ -159,7 +158,16 @@ function renderCart() {
             }
         }
         
-        const imagenSrc = item.imagen || 'assets/images/placeholder.jpg';
+        // ===== CORREGIR RUTA DE LA IMAGEN =====
+        let imagenSrc = 'assets/images/placeholder.jpg';
+        if (item.imagen) {
+            if (typeof corregirRutaImagen !== 'undefined') {
+                imagenSrc = corregirRutaImagen(item.imagen);
+            } else {
+                imagenSrc = item.imagen;
+            }
+        }
+        // ======================================
         
         html += `
             <div class="cart-item" data-id="${item.id}">
